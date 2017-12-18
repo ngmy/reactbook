@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Hello React</title>
+    <meta charset="utf-8">
+  </head>
+  <body>
+    <div id="app">
+      <!-- アプリケーションはここに描画されます -->
+    </div>
+    <script src="react/build/react.js"></script>
+    <script src="react/build/react-dom.js"></script>
+    <script>
+      var Component = React.createClass({
+        render: function() {
+          return React.DOM.span(null, "カスタムコンポーネント");
+        }
+      });
+
+      var ComponentFactory = React.createFactory(Component);
+
+      ReactDOM.render(
+        ComponentFactory(),
+        document.getElementById("app")
+      );
+    </script>
+  </body>
+</html>
