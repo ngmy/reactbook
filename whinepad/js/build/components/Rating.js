@@ -63,7 +63,7 @@ var Rating = function (_Component) {
   }, {
     key: 'componentWillReceiveProps',
     value: function componentWillReceiveProps(nextProps) {
-      this.setRating(nextPropts.defaultValue);
+      this.setRating(nextProps.defaultValue);
     }
   }, {
     key: 'render',

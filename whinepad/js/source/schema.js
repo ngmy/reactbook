@@ -4,7 +4,7 @@ export default [
   {
     id: 'name',
     label: '名前',
-    show: true. // Excelに表示するか否か
+    show: true, // Excelに表示するか否か
     sample: '2ドルのジャック',
     align: 'left', // Excelでの配置
   },

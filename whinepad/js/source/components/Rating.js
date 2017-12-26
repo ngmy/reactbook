@@ -30,7 +30,7 @@ class Rating extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    this.setRating(nextPropts.defaultValue);
+    this.setRating(nextProps.defaultValue);
   }
 
   render() {
