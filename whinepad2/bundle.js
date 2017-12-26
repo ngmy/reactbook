@@ -209,14 +209,16 @@ var _schema2 = _interopRequireDefault(_schema);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var data = JSON.parse(localStorage.getItem('data'));
+var data = void 0;
+var storage = localStorage.getItem('data');
 
-if (!data) {
-  data = {};
+if (!storage) {
+  data = [{}];
   _schema2.default.forEach(function (item) {
-    return data[item.id] = item.sample;
+    return data[0][item.id] = item.sample;
   });
-  data = [data];
+} else {
+  data = JSON.parse(storage);
 }
 
 _reactDom2.default.render(_react2.default.createElement(
@@ -314,13 +316,8 @@ var _react2 = _interopRequireDefault(_react);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-function Button(props) {
-  var cssclasses = (0, _classnames2.default)('Button', props.className);
-  return props.href ? _react2.default.createElement('a', _extends({}, props, { className: cssclasses })) : _react2.default.createElement('button', _extends({}, props, { className: cssclasses }));
-}
-
-Button.propTypes = {
-  href: _react.PropTypes.string
+var Button = function Button(props) {
+  return props.href ? _react2.default.createElement('a', _extends({}, props, { className: (0, _classnames2.default)('Button', props.className) })) : _react2.default.createElement('button', _extends({}, props, { className: (0, _classnames2.default)('Button', props.className) }));
 };
 
 exports.default = Button;

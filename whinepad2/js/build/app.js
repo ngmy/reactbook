@@ -22,14 +22,16 @@ var _schema2 = _interopRequireDefault(_schema);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var data = JSON.parse(localStorage.getItem('data'));
+var data = void 0;
+var storage = localStorage.getItem('data');
 
-if (!data) {
-  data = {};
+if (!storage) {
+  data = [{}];
   _schema2.default.forEach(function (item) {
-    return data[item.id] = item.sample;
+    return data[0][item.id] = item.sample;
   });
-  data = [data];
+} else {
+  data = JSON.parse(storage);
 }
 
 _reactDom2.default.render(_react2.default.createElement(

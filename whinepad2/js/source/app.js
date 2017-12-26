@@ -1,3 +1,5 @@
+/* @flow */
+
 'use strict';
 
 import Logo from './components/Logo';
@@ -6,12 +8,14 @@ import ReactDOM from 'react-dom';
 import Whinepad from './components/Whinepad';
 import schema from './schema';
 
-let data = JSON.parse(localStorage.getItem('data'));
+let data: Array<Object>;
+const storage: ?string = localStorage.getItem('data');
 
-if (!data) {
-  data = {};
-  schema.forEach(item => data[item.id] = item.sample);
-  data = [data];
+if (!storage) {
+  data = [{}];
+  schema.forEach(item => data[0][item.id] = item.sample);
+} else {
+  data = JSON.parse(storage);
 }
 
 ReactDOM.render(
