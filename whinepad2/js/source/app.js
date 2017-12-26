@@ -18,6 +18,12 @@ if (!storage) {
   data = JSON.parse(storage);
 }
 
+const pad = document.getElementById('pad');
+
+if (pad === null) {
+  throw Error('アプリケーションを配置するDOMが存在しません');
+}
+
 ReactDOM.render(
   <div>
     <div className="app-header">
@@ -25,5 +31,5 @@ ReactDOM.render(
     </div>
     <Whinepad schema={schema} initialData={data} />
   </div>,
-  document.getElementById('pad')
+  pad
 );

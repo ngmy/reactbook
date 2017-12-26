@@ -34,6 +34,12 @@ if (!storage) {
   data = JSON.parse(storage);
 }
 
+var pad = document.getElementById('pad');
+
+if (pad === null) {
+  throw Error('アプリケーションを配置するDOMが存在しません');
+}
+
 _reactDom2.default.render(_react2.default.createElement(
   'div',
   null,
@@ -44,4 +50,4 @@ _reactDom2.default.render(_react2.default.createElement(
     ' Whinepad\u306B\u3088\u3046\u3053\u305D\uFF01'
   ),
   _react2.default.createElement(_Whinepad2.default, { schema: _schema2.default, initialData: data })
-), document.getElementById('pad'));
+), pad);
