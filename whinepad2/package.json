@@ -1,4 +1,13 @@
 {
   "name": "whinepad",
-  "version": "2.0.0"
+  "version": "2.0.0",
+  "babel": {
+    "presets": [
+      "es2015",
+      "react"
+    ]
+  },
+  "scripts": {
+    "watch": "watch \"sh scripts/build.sh\" js/source css/"
+  }
 }
