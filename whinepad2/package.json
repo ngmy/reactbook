@@ -9,5 +9,20 @@
   },
   "scripts": {
     "watch": "watch \"sh scripts/build.sh\" js/source css/"
+  },
+  "eslintConfig": {
+    "parser": "babel-eslint",
+    "plugins": [
+      "babel",
+      "react"
+    ],
+    "extends": "eslint:recommended",
+    "env": {
+      "browser": true
+    },
+    "rules": {
+      "react/jsx-uses-react": 1,
+      "react/jsx-uses-vars": 1
+    }
   }
 }
