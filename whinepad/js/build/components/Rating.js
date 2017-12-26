@@ -75,8 +75,8 @@ var Rating = function (_Component) {
           {
             className: i <= this.state.tmpRating ? 'RatingOn' : null,
             key: i,
-            onClick: !this.props.readOnly && this.setRating.bind(this, i),
-            onMouseOver: !this.props.readOnly && this.setTemp.bind(this, i)
+            onClick: !this.props.readonly && this.setRating.bind(this, i),
+            onMouseOver: !this.props.readonly && this.setTemp.bind(this, i)
           },
           '\u2606'
         ));

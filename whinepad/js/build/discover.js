@@ -1,5 +1,9 @@
 'use strict';
 
+var _Form = require('./components/Form');
+
+var _Form2 = _interopRequireDefault(_Form);
+
 var _FormInput = require('./components/FormInput');
 
 var _FormInput2 = _interopRequireDefault(_FormInput);
@@ -122,7 +126,7 @@ _reactDom2.default.render(_react2.default.createElement(
     'div',
     null,
     '\u8AAD\u307F\u53D6\u308A\u5C02\u7528: ',
-    _react2.default.createElement(_Rating2.default, { readOnly: true, defaultValue: 3 })
+    _react2.default.createElement(_Rating2.default, { readonly: true, defaultValue: 3 })
   ),
   _react2.default.createElement(
     'h2',
@@ -223,5 +227,22 @@ _reactDom2.default.render(_react2.default.createElement(
         )
       )
     )
-  )
+  ),
+  _react2.default.createElement(
+    'h2',
+    null,
+    'Form'
+  ),
+  _react2.default.createElement(_Form2.default, {
+    fields: [{ label: '評価', type: 'rating', id: 'rateme' }, { label: 'あいさつ', id: 'freetext' }],
+    initialData: { rateme: 4, freetext: 'Hello' } }),
+  _react2.default.createElement(
+    'h2',
+    null,
+    '\u8AAD\u307F\u53D6\u308A\u5C02\u7528\u306EForm'
+  ),
+  _react2.default.createElement(_Form2.default, {
+    fields: [{ label: '評価', type: 'rating', id: 'rateme' }, { label: 'あいさつ', id: 'freetext' }],
+    initialData: { rateme: 4, freetext: 'Hello' },
+    readonly: true })
 ), document.getElementById('pad'));

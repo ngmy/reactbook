@@ -1,5 +1,6 @@
 'use strict';
 
+import Form from './components/Form';
 import FormInput from './components/FormInput';
 import Rating from './components/Rating';
 import Suggest from './components/Suggest';
@@ -29,7 +30,7 @@ ReactDOM.render(
     <div>初期値なし: <Rating /></div>
     <div>初期値4: <Rating defaultValue={4} /></div>
     <div>最大値11: <Rating max={11} /></div>
-    <div>読み取り専用: <Rating readOnly={true} defaultValue={3} /></div>
+    <div>読み取り専用: <Rating readonly={true} defaultValue={3} /></div>
 
     <h2>FormInput</h2>
     <table><tbody>
@@ -62,6 +63,23 @@ ReactDOM.render(
         <td><FormInput type="text" /></td>
       </tr>
     </tbody></table>
+
+    <h2>Form</h2>
+    <Form
+      fields={[
+        {label: '評価', type: 'rating', id: 'rateme'},
+        {label: 'あいさつ', id: 'freetext'},
+      ]}
+      initialData={{rateme: 4, freetext: 'Hello'}} />
+
+    <h2>読み取り専用のForm</h2>
+    <Form
+      fields={[
+        {label: '評価', type: 'rating', id: 'rateme'},
+        {label: 'あいさつ', id: 'freetext'},
+      ]}
+      initialData={{rateme: 4, freetext: 'Hello'}}
+      readonly={true} />
 
     {/* その他のコンポーネントはここに追加されます */}
   </div>,

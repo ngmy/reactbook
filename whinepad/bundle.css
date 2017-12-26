@@ -64,6 +64,19 @@ td {
   background-image: linear-gradient(to bottom, #3cb0fd, #3498db);
   text-decoration: none;
 }
+.Form .FormLabel {
+  color: #A0A0A0;
+  display: block;
+  font-size: 12px;
+  padding: 12px 0 6px;
+}
+
+.Form .FormRow {
+  padding-left: 20px;
+  text-align: left;
+}.FormInput {
+  
+}
 .Logo {
   background-image: url('images/mugen-nagamiya.gif');
   background-size: cover;
