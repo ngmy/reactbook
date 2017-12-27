@@ -1,8 +1,21 @@
 import classNames from 'classnames';
 import React, {Component, PropTypes} from 'react';
 
+type Props = {
+  defaultValue: number,
+  readonly: boolean,
+  max: number,
+};
+
+type State = {
+  rating: number,
+  tmpRating: number,
+};
+
 class Rating extends Component {
-  constructor(props) {
+  props: Props;
+  state: State;
+  constructor(props: Props) {
     super(props);
     this.state = {
       rating: props.defaultValue,
@@ -29,7 +42,7 @@ class Rating extends Component {
     this.setTemp(this.state.rating);
   }
 
-  componentWillReceiveProps(nextProps) {
+  componentWillReceiveProps(nextProps: Props) {
     this.setRating(nextProps.defaultValue);
   }
 
