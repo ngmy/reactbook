@@ -2,8 +2,21 @@ import Rating from './Rating';
 import React, {Component, PropTypes} from 'react';
 import Suggest from './Suggest';
 
+type FormInputFieldType = 'year' | 'suggest' | 'rating' | 'text' | 'input';
+
+export type FormInputFileldValue = string | number;
+
+export type FormInputField = {
+  type: FormInputFieldType,
+  defaultValue?: FormInputFileldValue,
+  id?: string,
+  options: Array<string>,
+  label?: string,
+}
+
 class FormInput extends Component {
-  getValue() {
+  props: FormInputField;
+  getValue(): FormInputFileldValue {
     return 'value' in this.refs.input
       ? this.refs.input.value
       : this.refs.input.getValue();

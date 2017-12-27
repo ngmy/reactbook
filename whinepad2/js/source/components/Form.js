@@ -2,7 +2,17 @@ import FormInput from './FormInput';
 import Rating from './Rating';
 import React, {Component, PropTypes} from 'react';
 
+import type {FormInputField, FormInputFieldValue} from './FormInput';
+
+type Props = {
+  fields: Array<FormInputField>,
+  initialData?: Object,
+  readonly?: boolean,
+}
+
 class Form extends Component {
+  props: Props;
+
   getData() {
     let data = {};
     this.props.fields.forEach(field =>
