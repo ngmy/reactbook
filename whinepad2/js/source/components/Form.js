@@ -1,6 +1,6 @@
 import FormInput from './FormInput';
 import Rating from './Rating';
-import React, {Component, PropTypes} from 'react';
+import React, {Component} from 'react';
 
 import type {FormInputField, FormInputFieldValue} from './FormInput';
 
@@ -24,7 +24,7 @@ class Form extends Component<Props> {
   render() {
     return (
       <form className="Form">{this.props.fields.map(field => {
-        const prefilled = this.props.initialData && this.props.initialData[field.id];
+        const prefilled: FormInputFieldValue = this.props.initialData && this.props.initialData[field.id] || '';
         if (!this.props.readonly) {
           return (
             <div className="FormRow" key={field.id}>

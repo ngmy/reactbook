@@ -833,7 +833,7 @@ var Form = function (_Component) {
         'form',
         { className: 'Form' },
         this.props.fields.map(function (field) {
-          var prefilled = _this3.props.initialData && _this3.props.initialData[field.id];
+          var prefilled = _this3.props.initialData && _this3.props.initialData[field.id] || '';
           if (!_this3.props.readonly) {
             return _react2.default.createElement(
               'div',

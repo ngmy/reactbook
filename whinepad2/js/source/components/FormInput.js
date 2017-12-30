@@ -1,7 +1,7 @@
 /* @flow */
 
 import Rating from './Rating';
-import React, {Component, PropTypes} from 'react';
+import React, {Component} from 'react';
 import Suggest from './Suggest';
 
 type FormInputFieldType = 'year' | 'suggest' | 'rating' | 'text' | 'input';
