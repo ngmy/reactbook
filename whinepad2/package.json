@@ -37,6 +37,7 @@
     ]
   },
   "devDependencies": {
+    "babel-core": "^6.26.0",
     "babel-jest": "^22.0.4",
     "invariant": "^2.2.2",
     "react-addons-test-utils": "^15.6.2"
