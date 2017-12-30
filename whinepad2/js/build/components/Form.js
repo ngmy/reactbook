@@ -97,15 +97,4 @@ var Form = function (_Component) {
   return Form;
 }(_react.Component);
 
-Form.propTypes = {
-  fields: _react.PropTypes.arrayOf(_react.PropTypes.shape({
-    id: _react.PropTypes.string.isRequired,
-    label: _react.PropTypes.string.isRequired,
-    type: _react.PropTypes.string,
-    option: _react.PropTypes.arrayOf(_react.PropTypes.string)
-  })).isRequired,
-  initialData: _react.PropTypes.object,
-  readonly: _react.PropTypes.bool
-};
-
 exports.default = Form;

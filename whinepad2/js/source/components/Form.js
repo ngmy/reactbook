@@ -8,9 +8,9 @@ type Props = {
   fields: Array<FormInputField>,
   initialData?: Object,
   readonly?: boolean,
-}
+};
 
-class Form extends Component {
+class Form extends Component<Props> {
   props: Props;
 
   getData() {
@@ -50,16 +50,5 @@ class Form extends Component {
     );
   }
 }
-
-Form.propTypes = {
-  fields: PropTypes.arrayOf(PropTypes.shape({
-    id: PropTypes.string.isRequired,
-    label: PropTypes.string.isRequired,
-    type: PropTypes.string,
-    option: PropTypes.arrayOf(PropTypes.string),
-  })).isRequired,
-  initialData: PropTypes.object,
-  readonly: PropTypes.bool,
-};
 
 export default Form

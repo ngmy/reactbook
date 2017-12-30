@@ -102,15 +102,9 @@ var Rating = function (_Component) {
   return Rating;
 }(_react.Component);
 
-Rating.propTypes = {
-  defaultValue: _react.PropTypes.number,
-  readonly: _react.PropTypes.bool,
-  max: _react.PropTypes.number
-};
-
 Rating.defaultProps = {
   defaultValue: 0,
-  max: 5
+  max: 5,
+  readonly: false
 };
-
 exports.default = Rating;

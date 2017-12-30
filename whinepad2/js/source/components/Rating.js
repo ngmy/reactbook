@@ -1,3 +1,5 @@
+/* @flow */
+
 import classNames from 'classnames';
 import React, {Component, PropTypes} from 'react';
 
@@ -12,9 +14,16 @@ type State = {
   tmpRating: number,
 };
 
-class Rating extends Component {
+class Rating extends Component<Props, State> {
   props: Props;
   state: State;
+
+  static defaultProps = {
+    defaultValue: 0,
+    max: 5,
+    readonly: false,
+  };
+
   constructor(props: Props) {
     super(props);
     this.state = {
@@ -27,11 +36,11 @@ class Rating extends Component {
     return this.state.rating;
   }
 
-  setTemp(rating) {
+  setTemp(rating: number) {
     this.setState({tmpRating: rating});
   }
 
-  setRating(rating) {
+  setRating(rating: number) {
     this.setState({
       tmpRating: rating,
       rating: rating,
@@ -79,16 +88,5 @@ class Rating extends Component {
     );
   }
 }
-
-Rating.propTypes = {
-  defaultValue: PropTypes.number,
-  readonly: PropTypes.bool,
-  max: PropTypes.number,
-};
-
-Rating.defaultProps = {
-  defaultValue: 0,
-  max: 5,
-};
 
 export default Rating

@@ -72,11 +72,4 @@ var FormInput = function (_Component) {
   return FormInput;
 }(_react.Component);
 
-FormInput.propTypes = {
-  type: _react.PropTypes.oneOf(['year', 'suggest', 'rating', 'text', 'input']),
-  id: _react.PropTypes.string,
-  options: _react.PropTypes.array, // 入力候補の<option>
-  defaultValue: _react.PropTypes.any
-};
-
 exports.default = FormInput;

@@ -469,17 +469,6 @@ var Form = function (_Component) {
   return Form;
 }(_react.Component);
 
-Form.propTypes = {
-  fields: _react.PropTypes.arrayOf(_react.PropTypes.shape({
-    id: _react.PropTypes.string.isRequired,
-    label: _react.PropTypes.string.isRequired,
-    type: _react.PropTypes.string,
-    option: _react.PropTypes.arrayOf(_react.PropTypes.string)
-  })).isRequired,
-  initialData: _react.PropTypes.object,
-  readonly: _react.PropTypes.bool
-};
-
 exports.default = Form;
 },{"./FormInput":6,"./Rating":8,"react":187}],6:[function(require,module,exports){
 'use strict';
@@ -555,13 +544,6 @@ var FormInput = function (_Component) {
 
   return FormInput;
 }(_react.Component);
-
-FormInput.propTypes = {
-  type: _react.PropTypes.oneOf(['year', 'suggest', 'rating', 'text', 'input']),
-  id: _react.PropTypes.string,
-  options: _react.PropTypes.array, // 入力候補の<option>
-  defaultValue: _react.PropTypes.any
-};
 
 exports.default = FormInput;
 },{"./Rating":8,"./Suggest":9,"react":187}],7:[function(require,module,exports){
@@ -719,17 +701,11 @@ var Rating = function (_Component) {
   return Rating;
 }(_react.Component);
 
-Rating.propTypes = {
-  defaultValue: _react.PropTypes.number,
-  readonly: _react.PropTypes.bool,
-  max: _react.PropTypes.number
-};
-
 Rating.defaultProps = {
   defaultValue: 0,
-  max: 5
+  max: 5,
+  readonly: false
 };
-
 exports.default = Rating;
 },{"classnames":11,"react":187}],9:[function(require,module,exports){
 "use strict";

@@ -36,6 +36,10 @@ var _classnames = require('classnames');
 
 var _classnames2 = _interopRequireDefault(_classnames);
 
+var _invariant = require('invariant');
+
+var _invariant2 = _interopRequireDefault(_invariant);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
@@ -75,12 +79,25 @@ var Excel = function (_Component) {
       this.props.onDataChange(data);
     }
   }, {
+    key: '_sortCallback',
+    value: function _sortCallback(a, b, descending) {
+      var res = 0;
+      if (typeof a === 'number' && typeof b === 'number') {
+        res = a - b;
+      } else {
+        res = String(a).localeCompare(String(b));
+      }
+      return descending ? -1 * res : res;
+    }
+  }, {
     key: '_sort',
     value: function _sort(key) {
+      var _this2 = this;
+
       var data = Array.from(this.state.data);
       var descending = this.state.sortby === key && !this.state.descending;
       data.sort(function (a, b) {
-        return descending ? a[key] < b[key] ? 1 : -1 : a[key] > b[key] ? 1 : -1;
+        return _this2._sortCallback(a[key], b[key], descending);
       });
       this.setState({
         data: data,
@@ -92,9 +109,10 @@ var Excel = function (_Component) {
   }, {
     key: '_showEditor',
     value: function _showEditor(e) {
+      var target = e.target;
       this.setState({ edit: {
-          row: parseInt(e.target.dataset.row, 10),
-          cell: e.target.dataset.key
+          row: parseInt(target.dataset.row, 10),
+          key: target.dataset.key
         } });
     }
   }, {
@@ -103,6 +121,7 @@ var Excel = function (_Component) {
       e.preventDefault();
       var value = this.refs.input.getValue();
       var data = Array.from(this.state.data);
+      (0, _invariant2.default)(this.state.edit, 'ステートeditが不正です');
       data[this.state.edit.row][this.state.edit.key] = value;
       this.setState({
         edit: null,
@@ -122,8 +141,10 @@ var Excel = function (_Component) {
         this._closeDialog();
         return;
       }
+      var index = this.state.dialog ? this.state.dialog.idx : null;
+      (0, _invariant2.default)(typeof index === 'number', 'ステートdialogが不正です');
       var data = Array.from(this.state.data);
-      data.splice(this.state.dialog.idx, 1);
+      data.splice(index, 1);
       this.setState({
         dialog: null,
         data: data
@@ -142,8 +163,10 @@ var Excel = function (_Component) {
         this._closeDialog();
         return;
       }
+      var index = this.state.dialog ? this.state.dialog.idx : null;
+      (0, _invariant2.default)(typeof index === 'number', 'ステートdialogが不正です');
       var data = Array.from(this.state.data);
-      data[this.state.dialog.idx] = this.refs.form.getData();
+      data[index] = this.refs.form.getData();
       this.setState({
         dialog: null,
         data: data
@@ -180,7 +203,9 @@ var Excel = function (_Component) {
   }, {
     key: '_renderDeleteDialog',
     value: function _renderDeleteDialog() {
-      var first = this.state.data[this.state.dialog.idx];
+      var index = this.state.dialog ? this.state.dialog.idx : null;
+      (0, _invariant2.default)(typeof index === 'number', 'ステートdialogが不正です');
+      var first = this.state.data[index];
       var nameguess = first[Object.keys(first)[0]];
       return _react2.default.createElement(
         _Dialog2.default,
@@ -196,6 +221,8 @@ var Excel = function (_Component) {
   }, {
     key: '_renderFormDialog',
     value: function _renderFormDialog(readonly) {
+      var index = this.state.dialog ? this.state.dialog.idx : null;
+      (0, _invariant2.default)(typeof index === 'number', 'ステートdialogが不正です');
       return _react2.default.createElement(
         _Dialog2.default,
         {
@@ -208,14 +235,14 @@ var Excel = function (_Component) {
         _react2.default.createElement(_Form2.default, {
           ref: 'form',
           fields: this.props.schema,
-          initialData: this.state.data[this.state.dialog.idx],
+          initialData: this.state.data[index],
           readonly: readonly })
       );
     }
   }, {
     key: '_renderTable',
     value: function _renderTable() {
-      var _this2 = this;
+      var _this3 = this;
 
       return _react2.default.createElement(
         'table',
@@ -231,15 +258,15 @@ var Excel = function (_Component) {
                 return null;
               }
               var title = item.label;
-              if (_this2.state.sortby === item.id) {
-                title += _this2.state.descending ? ' \u2191' : ' \u2193';
+              if (_this3.state.sortby === item.id) {
+                title += _this3.state.descending ? ' \u2191' : ' \u2193';
               }
               return _react2.default.createElement(
                 'th',
                 {
                   className: 'schema-' + item.id,
                   key: item.id,
-                  onClick: _this2._sort.bind(_this2, item.id)
+                  onClick: _this3._sort.bind(_this3, item.id)
                 },
                 title
               );
@@ -261,17 +288,17 @@ var Excel = function (_Component) {
               Object.keys(row).map(function (cell, idx) {
                 var _classNames;
 
-                var schema = _this2.props.schema[idx];
+                var schema = _this3.props.schema[idx];
                 if (!schema || !schema.show) {
                   return null;
                 }
                 var isRating = schema.type === 'rating';
-                var edit = _this2.state.edit;
+                var edit = _this3.state.edit;
                 var content = row[cell];
                 if (!isRating && edit && edit.row === rowidx && edit.key === schema.id) {
                   content = _react2.default.createElement(
                     'form',
-                    { onSubmit: _this2._save.bind(_this2) },
+                    { onSubmit: _this3._save.bind(_this3) },
                     _react2.default.createElement(_FormInput2.default, _extends({ ref: 'input' }, schema, {
                       defaultValue: content }))
                   );
@@ -288,11 +315,11 @@ var Excel = function (_Component) {
                     'data-key': schema.id },
                   content
                 );
-              }, _this2),
+              }, _this3),
               _react2.default.createElement(
                 'td',
                 { className: 'ExcelDataCenter' },
-                _react2.default.createElement(_Actions2.default, { onAction: _this2._actionClick.bind(_this2, rowidx) })
+                _react2.default.createElement(_Actions2.default, { onAction: _this3._actionClick.bind(_this3, rowidx) })
               )
             );
           }, this)

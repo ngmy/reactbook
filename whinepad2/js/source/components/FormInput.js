@@ -1,3 +1,5 @@
+/* @flow */
+
 import Rating from './Rating';
 import React, {Component, PropTypes} from 'react';
 import Suggest from './Suggest';
@@ -12,9 +14,9 @@ export type FormInputField = {
   id?: string,
   options: Array<string>,
   label?: string,
-}
+};
 
-class FormInput extends Component {
+class FormInput extends Component<FormInputField> {
   props: FormInputField;
   getValue(): FormInputFileldValue {
     return 'value' in this.refs.input
@@ -23,7 +25,7 @@ class FormInput extends Component {
   }
 
   render() {
-    const common = {
+    const common: Object = {
       id: this.props.id,
       ref: 'input',
       defaultValue: this.props.defaultValue,
@@ -53,12 +55,5 @@ class FormInput extends Component {
 
   }
 }
-
-FormInput.propTypes = {
-  type: PropTypes.oneOf(['year', 'suggest', 'rating', 'text', 'input']),
-  id: PropTypes.string,
-  options: PropTypes.array, // 入力候補の<option>
-  defaultValue: PropTypes.any,
-};
 
 export default FormInput

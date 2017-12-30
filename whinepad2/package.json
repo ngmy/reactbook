@@ -4,7 +4,8 @@
   "babel": {
     "presets": [
       "es2015",
-      "react"
+      "react",
+      "stage-0"
     ]
   },
   "scripts": {
@@ -24,5 +25,8 @@
       "react/jsx-uses-react": 1,
       "react/jsx-uses-vars": 1
     }
+  },
+  "devDependencies": {
+    "invariant": "^2.2.2"
   }
 }
