@@ -1,5 +1,14 @@
+/* @flow */
+
 import React from 'react';
-class Wrap extends React.Component {
+
+type Props = {
+  children: Object,
+}
+
+class Wrap extends React.Component<Props> {
+  props: Props;
+
   render() {
     return <div>{this.props.children}</div>;
   }
