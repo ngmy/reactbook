@@ -28,4 +28,17 @@ describe('Buttonコンポーネントの描画', () => {
     );
     expect(ReactDOM.findDOMNode(a).children[0].nodeName).toEqual('A');
   });
+
+  it('カスタムのCSSクラスを指定できます', () => {
+    const button = TestUtils.renderIntoDocument(
+      <div>
+        <Button className="good bye">
+          こんにちは
+        </Button>
+      </div>
+    );
+    //console.log(ReactDOM.findDOMNode(button).outerHTML);
+    const buttonNode = ReactDOM.findDOMNode(button).children[0];
+    expect(buttonNode.getAttribute('class')).toEqual('Button good bye');
+  });
 });
