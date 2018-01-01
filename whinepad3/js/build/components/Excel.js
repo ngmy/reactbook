@@ -222,9 +222,8 @@ var Excel = function (_Component) {
         },
         _react2.default.createElement(_Form2.default, {
           ref: 'form',
-          fields: this.schema,
-          initialData: this.state.data[index],
-          readonly: readonly })
+          recordId: index,
+          readonly: !!readonly })
       );
     }
   }, {

@@ -45,10 +45,10 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 var Whinepad = function (_Component) {
   _inherits(Whinepad, _Component);
 
-  function Whinepad(props) {
+  function Whinepad() {
     _classCallCheck(this, Whinepad);
 
-    var _this = _possibleConstructorReturn(this, (Whinepad.__proto__ || Object.getPrototypeOf(Whinepad)).call(this, props));
+    var _this = _possibleConstructorReturn(this, (Whinepad.__proto__ || Object.getPrototypeOf(Whinepad)).call(this));
 
     _this.state = {
       addnew: false,

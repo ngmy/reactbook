@@ -182,9 +182,8 @@ class Excel extends Component<Props, State> {
       >
         <Form
           ref="form"
-          fields={this.schema}
-          initialData={this.state.data[index]}
-          readonly={readonly} />
+          recordId={index}
+          readonly={!!readonly} />
       </Dialog>
     )
   }

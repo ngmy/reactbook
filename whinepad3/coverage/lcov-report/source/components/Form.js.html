@@ -22,22 +22,22 @@
       <div class='fl pad1y space-right2'>
         <span class="strong">0% </span>
         <span class="quiet">Statements</span>
-        <span class='fraction'>0/11</span>
+        <span class='fraction'>0/15</span>
       </div>
       <div class='fl pad1y space-right2'>
         <span class="strong">0% </span>
         <span class="quiet">Branches</span>
-        <span class='fraction'>0/9</span>
+        <span class='fraction'>0/13</span>
       </div>
       <div class='fl pad1y space-right2'>
         <span class="strong">0% </span>
         <span class="quiet">Functions</span>
-        <span class='fraction'>0/4</span>
+        <span class='fraction'>0/5</span>
       </div>
       <div class='fl pad1y space-right2'>
         <span class="strong">0% </span>
         <span class="quiet">Lines</span>
-        <span class='fraction'>0/11</span>
+        <span class='fraction'>0/15</span>
       </div>
     </div>
   </div>
@@ -97,7 +97,19 @@
 52
 53
 54
-55</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -109,6 +121,18 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -151,24 +175,36 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import FormInput from './FormInput';
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">/* @flow */
+&nbsp;
+import CRUDStore from '../flux/CRUDStore';
+import FormInput from './FormInput';
 import Rating from './Rating';
 import React, {Component} from 'react';
 &nbsp;
-import type {FormInputField, FormInputFieldValue} from './FormInput';
+import type {FormInputFieldValue} from './FormInput';
 &nbsp;
 type Props = {
-  fields: Array&lt;FormInputField&gt;,
-  initialData?: Object,
   readonly?: boolean,
+  recordId: ?number,
 };
 &nbsp;
 class Form extends Component&lt;Props&gt; {
+  fields: Array&lt;Object&gt;;
+  initialData: ?Object;
   props: Props;
+&nbsp;
+<span class="fstat-no" title="function not covered" >  co</span>nstructor(props: Props) {
+<span class="cstat-no" title="statement not covered" >    super(props);</span>
+<span class="cstat-no" title="statement not covered" >    this.fields = CRUDStore.getSchema();</span>
+<span class="cstat-no" title="statement not covered" >    if ('recordId' in this.props &amp;&amp; this.props.recordId) {</span>
+<span class="cstat-no" title="statement not covered" >      this.initialData = CRUDStore.getRecord(this.props.recordId);</span>
+    }
+  }
 &nbsp;
 <span class="fstat-no" title="function not covered" >  ge</span>tData() {
     let data = <span class="cstat-no" title="statement not covered" >{};</span>
-<span class="cstat-no" title="statement not covered" >    this.props.fields.forEach(<span class="fstat-no" title="function not covered" >fi</span>eld =&gt;</span>
+<span class="cstat-no" title="statement not covered" >    this.fields.forEach(<span class="fstat-no" title="function not covered" >fi</span>eld =&gt;</span>
 <span class="cstat-no" title="statement not covered" >      data[field.id] = this.refs[field.id].getValue()</span>
     );
 <span class="cstat-no" title="statement not covered" >    return data;</span>
@@ -176,8 +212,8 @@ class Form extends Component&lt;Props&gt; {
 &nbsp;
 <span class="fstat-no" title="function not covered" >  re</span>nder() {
 <span class="cstat-no" title="statement not covered" >    return (</span>
-      &lt;form className="Form"&gt;{this.props.fields.map(<span class="fstat-no" title="function not covered" >fi</span>eld =&gt; {
-        const prefilled: FormInputFieldValue = <span class="cstat-no" title="statement not covered" >this.props.initialData &amp;&amp; this.props.initialData[field.id] || '';</span>
+      &lt;form className="Form"&gt;{this.fields.map(<span class="fstat-no" title="function not covered" >fi</span>eld =&gt; {
+        const prefilled: FormInputFieldValue = <span class="cstat-no" title="statement not covered" >this.initialData &amp;&amp; this.initialData[field.id] || '';</span>
 <span class="cstat-no" title="statement not covered" >        if (!this.props.readonly) {</span>
 <span class="cstat-no" title="statement not covered" >          return (</span>
             &lt;div className="FormRow" key={field.id}&gt;
@@ -211,7 +247,7 @@ export default Form
 </div><!-- /wrapper -->
 <div class='footer quiet pad2 space-top1 center small'>
   Code coverage
-  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Sun Dec 31 2017 00:43:15 GMT+0900 (JST)
+  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Mon Jan 01 2018 16:56:42 GMT+0900 (JST)
 </div>
 </div>
 <script src="../../prettify.js"></script>

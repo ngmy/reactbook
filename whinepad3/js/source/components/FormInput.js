@@ -6,11 +6,11 @@ import Suggest from './Suggest';
 
 type FormInputFieldType = 'year' | 'suggest' | 'rating' | 'text' | 'input';
 
-export type FormInputFileldValue = string | number;
+export type FormInputFieldValue = string | number;
 
 export type FormInputField = {
   type: FormInputFieldType,
-  defaultValue?: FormInputFileldValue,
+  defaultValue?: FormInputFieldValue,
   id?: string,
   options: Array<string>,
   label?: string,
@@ -18,7 +18,7 @@ export type FormInputField = {
 
 class FormInput extends Component<FormInputField> {
   props: FormInputField;
-  getValue(): FormInputFileldValue {
+  getValue(): FormInputFieldValue {
     return 'value' in this.refs.input
       ? this.refs.input.value
       : this.refs.input.getValue();

@@ -413,7 +413,7 @@ var Form = function (_Component) {
     var _this = _possibleConstructorReturn(this, (Form.__proto__ || Object.getPrototypeOf(Form)).call(this, props));
 
     _this.fields = _CRUDStore2.default.getSchema();
-    if ('recordId' in _this.props) {
+    if ('recordId' in _this.props && _this.props.recordId) {
       _this.initialData = _CRUDStore2.default.getRecord(_this.props.recordId);
     }
     return _this;
@@ -425,7 +425,7 @@ var Form = function (_Component) {
       var _this2 = this;
 
       var data = {};
-      this.props.fields.forEach(function (field) {
+      this.fields.forEach(function (field) {
         return data[field.id] = _this2.refs[field.id].getValue();
       });
       return data;
@@ -438,8 +438,8 @@ var Form = function (_Component) {
       return _react2.default.createElement(
         'form',
         { className: 'Form' },
-        this.props.fields.map(function (field) {
-          var prefilled = _this3.props.initialData && _this3.props.initialData[field.id] || '';
+        this.fields.map(function (field) {
+          var prefilled = _this3.initialData && _this3.initialData[field.id] || '';
           if (!_this3.props.readonly) {
             return _react2.default.createElement(
               'div',

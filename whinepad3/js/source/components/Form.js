@@ -1,3 +1,5 @@
+/* @flow */
+
 import CRUDStore from '../flux/CRUDStore';
 import FormInput from './FormInput';
 import Rating from './Rating';
@@ -18,14 +20,14 @@ class Form extends Component<Props> {
   constructor(props: Props) {
     super(props);
     this.fields = CRUDStore.getSchema();
-    if ('recordId' in this.props) {
+    if ('recordId' in this.props && this.props.recordId) {
       this.initialData = CRUDStore.getRecord(this.props.recordId);
     }
   }
 
   getData() {
     let data = {};
-    this.props.fields.forEach(field =>
+    this.fields.forEach(field =>
       data[field.id] = this.refs[field.id].getValue()
     );
     return data;
@@ -33,8 +35,8 @@ class Form extends Component<Props> {
 
   render() {
     return (
-      <form className="Form">{this.props.fields.map(field => {
-        const prefilled: FormInputFieldValue = this.props.initialData && this.props.initialData[field.id] || '';
+      <form className="Form">{this.fields.map(field => {
+        const prefilled: FormInputFieldValue = this.initialData && this.initialData[field.id] || '';
         if (!this.props.readonly) {
           return (
             <div className="FormRow" key={field.id}>

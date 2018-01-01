@@ -1,3 +1,5 @@
+/* @flow */
+
 import CRUDActions from '../flux/CRUDActions';
 import CRUDStore from '../flux/CRUDStore';
 import Button from './Button';
@@ -6,14 +8,19 @@ import Excel from './Excel';
 import Form from './Form';
 import React, {Component} from 'react';
 
+type Props = Object;
+
 type State = {
   addnew: boolean,
   count: number,
 };
 
-class Whinepad extends Component {
-  constructor(props) {
-    super(props);
+class Whinepad extends Component<Props, State> {
+  props: Props;
+  state: State;
+
+  constructor() {
+    super();
     this.state = {
       addnew: false,
       count: CRUDStore.getCount(),
@@ -26,7 +33,7 @@ class Whinepad extends Component {
     });
   }
 
-  shouldComponentUpdate(newProps: Object, newState: State): boolean {
+  shouldComponentUpdate(newProps: Props, newState: State): boolean {
     return (
       newState.addnew !== this.state.addnew ||
       newState.count !== this.state.count
@@ -37,7 +44,7 @@ class Whinepad extends Component {
     this.setState({addnew: true});
   }
 
-  _addNew(action) {
+  _addNew(action: string) {
     if (action === 'dismiss') {
       this.setState({addnew: false});
       return;
