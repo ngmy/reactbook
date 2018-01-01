@@ -1,12 +1,13 @@
 /* @flow */
 
+import CRUDActions from '../flux/CRUDActions';
 import CRUDStore from '../flux/CRUDStore';
 import Actions from './Actions';
 import Dialog from './Dialog';
 import Form from './Form';
 import FormInput from './FormInput';
 import Rating from './Rating';
-import React, {Component, PropTypes} from 'react';
+import React, {Component} from 'react';
 import classNames from 'classnames';
 import invariant from 'invariant';
 
@@ -59,22 +60,10 @@ class Excel extends Component<Props, State> {
     this.setState({data: nextProps.initialData});
   }
 
-  _sortCallback(a: (string|number), b: (string|number), descending: boolean): number {
-    let res: number = 0;
-    if (typeof a === 'number' && typeof b === 'number') {
-      res = a - b;
-    } else {
-      res = String(a).localeCompare(String(b));
-    }
-    return descending ? -1 * res : res;
-  }
-
   _sort(key: string) {
-    let data = Array.from(this.state.data);
     const descending = this.state.sortby === key && !this.state.descending;
-    data.sort((a, b) => this._sortCallback(a[key], b[key], descending));
+    CRUDActions.sort(key, descending);
     this.setState({
-      data: data,
       sortby: key,
       descending: descending,
     });

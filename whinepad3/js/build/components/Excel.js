@@ -8,6 +8,10 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
+var _CRUDActions = require('../flux/CRUDActions');
+
+var _CRUDActions2 = _interopRequireDefault(_CRUDActions);
+
 var _CRUDStore = require('../flux/CRUDStore');
 
 var _CRUDStore2 = _interopRequireDefault(_CRUDStore);
@@ -84,28 +88,11 @@ var Excel = function (_Component) {
       this.setState({ data: nextProps.initialData });
     }
   }, {
-    key: '_sortCallback',
-    value: function _sortCallback(a, b, descending) {
-      var res = 0;
-      if (typeof a === 'number' && typeof b === 'number') {
-        res = a - b;
-      } else {
-        res = String(a).localeCompare(String(b));
-      }
-      return descending ? -1 * res : res;
-    }
-  }, {
     key: '_sort',
     value: function _sort(key) {
-      var _this2 = this;
-
-      var data = Array.from(this.state.data);
       var descending = this.state.sortby === key && !this.state.descending;
-      data.sort(function (a, b) {
-        return _this2._sortCallback(a[key], b[key], descending);
-      });
+      _CRUDActions2.default.sort(key, descending);
       this.setState({
-        data: data,
         sortby: key,
         descending: descending
       });
@@ -243,7 +230,7 @@ var Excel = function (_Component) {
   }, {
     key: '_renderTable',
     value: function _renderTable() {
-      var _this3 = this;
+      var _this2 = this;
 
       return _react2.default.createElement(
         'table',
@@ -259,15 +246,15 @@ var Excel = function (_Component) {
                 return null;
               }
               var title = item.label;
-              if (_this3.state.sortby === item.id) {
-                title += _this3.state.descending ? ' \u2191' : ' \u2193';
+              if (_this2.state.sortby === item.id) {
+                title += _this2.state.descending ? ' \u2191' : ' \u2193';
               }
               return _react2.default.createElement(
                 'th',
                 {
                   className: 'schema-' + item.id,
                   key: item.id,
-                  onClick: _this3._sort.bind(_this3, item.id)
+                  onClick: _this2._sort.bind(_this2, item.id)
                 },
                 title
               );
@@ -289,17 +276,17 @@ var Excel = function (_Component) {
               Object.keys(row).map(function (cell, idx) {
                 var _classNames;
 
-                var schema = _this3.schema[idx];
+                var schema = _this2.schema[idx];
                 if (!schema || !schema.show) {
                   return null;
                 }
                 var isRating = schema.type === 'rating';
-                var edit = _this3.state.edit;
+                var edit = _this2.state.edit;
                 var content = row[cell];
                 if (!isRating && edit && edit.row === rowidx && edit.key === schema.id) {
                   content = _react2.default.createElement(
                     'form',
-                    { onSubmit: _this3._save.bind(_this3) },
+                    { onSubmit: _this2._save.bind(_this2) },
                     _react2.default.createElement(_FormInput2.default, _extends({ ref: 'input' }, schema, {
                       defaultValue: content }))
                   );
@@ -316,11 +303,11 @@ var Excel = function (_Component) {
                     'data-key': schema.id },
                   content
                 );
-              }, _this3),
+              }, _this2),
               _react2.default.createElement(
                 'td',
                 { className: 'ExcelDataCenter' },
-                _react2.default.createElement(_Actions2.default, { onAction: _this3._actionClick.bind(_this3, rowidx) })
+                _react2.default.createElement(_Actions2.default, { onAction: _this2._actionClick.bind(_this2, rowidx) })
               )
             );
           }, this)

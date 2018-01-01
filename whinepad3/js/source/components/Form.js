@@ -3,7 +3,7 @@ import FormInput from './FormInput';
 import Rating from './Rating';
 import React, {Component} from 'react';
 
-import type {FormInputField, FormInputFieldValue} from './FormInput';
+import type {FormInputFieldValue} from './FormInput';
 
 type Props = {
   readonly?: boolean,

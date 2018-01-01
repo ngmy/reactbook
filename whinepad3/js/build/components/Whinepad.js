@@ -6,6 +6,10 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
+var _CRUDActions = require('../flux/CRUDActions');
+
+var _CRUDActions2 = _interopRequireDefault(_CRUDActions);
+
 var _CRUDStore = require('../flux/CRUDStore');
 
 var _CRUDStore2 = _interopRequireDefault(_CRUDStore);
@@ -56,8 +60,6 @@ var Whinepad = function (_Component) {
         count: _CRUDStore2.default.getCount()
       });
     });
-
-    _this._preSearchData = null;
     return _this;
   }
 
@@ -92,39 +94,6 @@ var Whinepad = function (_Component) {
       localStorage.setItem('data', JSON.stringify(data));
     }
   }, {
-    key: '_startSearching',
-    value: function _startSearching() {
-      this._preSearchData = _CRUDStore2.default.getData();
-    }
-  }, {
-    key: '_doneSearching',
-    value: function _doneSearching() {
-      this.setState({
-        data: this._preSearchData
-      });
-    }
-  }, {
-    key: '_search',
-    value: function _search(e) {
-      var needle = e.target.value.toLowerCase();
-      if (!needle) {
-        this.setState({ data: this._preSearchData });
-        return;
-      }
-      var fields = this.props.schema.map(function (item) {
-        return item.id;
-      });
-      var searchdata = this._preSearchData.filter(function (row) {
-        for (var f = 0; f < fields.length; f++) {
-          if (row[fields[f]].toString().toLowerCase().indexOf(needle) > -1) {
-            return true;
-          }
-        }
-        return false;
-      });
-      this.setState({ data: searchdata });
-    }
-  }, {
     key: 'render',
     value: function render() {
       return _react2.default.createElement(
@@ -149,9 +118,9 @@ var Whinepad = function (_Component) {
             { className: 'WhinepadToolbarSearch' },
             _react2.default.createElement('input', {
               placeholder: this.state.count + '\u4EF6\u304B\u3089\u691C\u7D22 ...',
-              onChange: this._search.bind(this),
-              onFocus: this._startSearching.bind(this),
-              onBlur: this._doneSearching.bind(this) })
+              onChange: _CRUDActions2.default.search.bind(_CRUDActions2.default),
+              onFocus: _CRUDActions2.default.startSearching.bind(_CRUDActions2.default),
+              onBlur: _CRUDActions2.default.doneSearching.bind(_CRUDActions2.default) })
           )
         ),
         _react2.default.createElement(
@@ -167,9 +136,7 @@ var Whinepad = function (_Component) {
             confirmLabel: '\u8FFD\u52A0',
             onAction: this._addNew.bind(this)
           },
-          _react2.default.createElement(_Form2.default, {
-            ref: 'form',
-            fields: this.props.schema })
+          _react2.default.createElement(_Form2.default, { ref: 'form' })
         ) : null
       );
     }
@@ -177,10 +144,5 @@ var Whinepad = function (_Component) {
 
   return Whinepad;
 }(_react.Component);
-
-Whinepad.propTypes = {
-  schema: _react.PropTypes.arrayOf(_react.PropTypes.object),
-  initialData: _react.PropTypes.arrayOf(_react.PropTypes.object)
-};
 
 exports.default = Whinepad;

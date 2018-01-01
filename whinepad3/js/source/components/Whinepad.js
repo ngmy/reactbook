@@ -1,9 +1,15 @@
+import CRUDActions from '../flux/CRUDActions';
 import CRUDStore from '../flux/CRUDStore';
 import Button from './Button';
 import Dialog from './Dialog';
 import Excel from './Excel';
 import Form from './Form';
-import React, {Component, PropTypes} from 'react';
+import React, {Component} from 'react';
+
+type State = {
+  addnew: boolean,
+  count: number,
+};
 
 class Whinepad extends Component {
   constructor(props) {
@@ -18,11 +24,9 @@ class Whinepad extends Component {
         count: CRUDStore.getCount(),
       })
     });
-
-    this._preSearchData = null;
   }
 
-  shouldComponentUpdate(newProps: Object, newState: state): boolean {
+  shouldComponentUpdate(newProps: Object, newState: State): boolean {
     return (
       newState.addnew !== this.state.addnew ||
       newState.count !== this.state.count
@@ -51,34 +55,6 @@ class Whinepad extends Component {
     localStorage.setItem('data', JSON.stringify(data));
   }
 
-  _startSearching() {
-    this._preSearchData = CRUDStore.getData();
-  }
-
-  _doneSearching() {
-    this.setState({
-      data: this._preSearchData,
-    });
-  }
-
-  _search(e) {
-    const needle = e.target.value.toLowerCase();
-    if (!needle) {
-      this.setState({data: this._preSearchData});
-      return;
-    }
-    const fields = this.props.schema.map(item => item.id);
-    const searchdata = this._preSearchData.filter(row => {
-      for (let f = 0; f < fields.length; f++) {
-        if (row[fields[f]].toString().toLowerCase().indexOf(needle) > -1) {
-          return true;
-        }
-      }
-      return false;
-    });
-    this.setState({data: searchdata});
-  }
-
   render() {
     return (
       <div className="Whinepad">
@@ -95,9 +71,9 @@ class Whinepad extends Component {
               placeholder={
                 `${this.state.count}件から検索 ...`
               }
-              onChange={this._search.bind(this)}
-              onFocus={this._startSearching.bind(this)}
-              onBlur={this._doneSearching.bind(this)} />
+              onChange={CRUDActions.search.bind(CRUDActions)}
+              onFocus={CRUDActions.startSearching.bind(CRUDActions)}
+              onBlur={CRUDActions.doneSearching.bind(CRUDActions)} />
           </div>
         </div>
         <div className="WhinepadDatagrid">
@@ -110,23 +86,12 @@ class Whinepad extends Component {
             confirmLabel="追加"
             onAction={this._addNew.bind(this)}
           >
-            <Form
-              ref="form"
-              fields={this.props.schema} />
+            <Form ref="form" />
           </Dialog>
           : null}
       </div>
     );
   }
 }
-
-Whinepad.propTypes = {
-  schema: PropTypes.arrayOf(
-    PropTypes.object
-  ),
-  initialData: PropTypes.arrayOf(
-    PropTypes.object
-  ),
-};
 
 export default Whinepad
