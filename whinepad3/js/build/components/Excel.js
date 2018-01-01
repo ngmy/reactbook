@@ -8,6 +8,10 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
+var _CRUDStore = require('../flux/CRUDStore');
+
+var _CRUDStore2 = _interopRequireDefault(_CRUDStore);
+
 var _Actions = require('./Actions');
 
 var _Actions2 = _interopRequireDefault(_Actions);
@@ -59,12 +63,18 @@ var Excel = function (_Component) {
     var _this = _possibleConstructorReturn(this, (Excel.__proto__ || Object.getPrototypeOf(Excel)).call(this, props));
 
     _this.state = {
-      data: _this.props.initialData,
+      data: _CRUDStore2.default.getData(),
       sortby: null, // schema.id
       descending: false,
       edit: null, // {row: 行番号, cell: 列番号}
       dialog: null // {type: 種類, idx: 行番号}
     };
+    _this.schema = _CRUDStore2.default.getSchema();
+    _CRUDStore2.default.addListener('change', function () {
+      _this.setState({
+        data: _CRUDStore2.default.getData()
+      });
+    });
     return _this;
   }
 
@@ -234,7 +244,7 @@ var Excel = function (_Component) {
         },
         _react2.default.createElement(_Form2.default, {
           ref: 'form',
-          fields: this.props.schema,
+          fields: this.schema,
           initialData: this.state.data[index],
           readonly: readonly })
       );
@@ -253,7 +263,7 @@ var Excel = function (_Component) {
           _react2.default.createElement(
             'tr',
             null,
-            this.props.schema.map(function (item) {
+            this.schema.map(function (item) {
               if (!item.show) {
                 return null;
               }
@@ -288,7 +298,7 @@ var Excel = function (_Component) {
               Object.keys(row).map(function (cell, idx) {
                 var _classNames;
 
-                var schema = _this3.props.schema[idx];
+                var schema = _this3.schema[idx];
                 if (!schema || !schema.show) {
                   return null;
                 }

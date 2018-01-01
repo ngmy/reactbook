@@ -1,5 +1,6 @@
 /* @flow */
 
+import CRUDStore from '../flux/CRUDStore';
 import Actions from './Actions';
 import Dialog from './Dialog';
 import Form from './Form';
@@ -43,12 +44,18 @@ class Excel extends Component<Props, State> {
   constructor(props: Props) {
     super(props);
     this.state = {
-      data: this.props.initialData,
+      data: CRUDStore.getData(),
       sortby: null, // schema.id
       descending: false,
       edit: null, // {row: 行番号, cell: 列番号}
       dialog: null, // {type: 種類, idx: 行番号}
     };
+    this.schema = CRUDStore.getSchema();
+    CRUDStore.addListener('change', () => {
+      this.setState({
+        data: CRUDStore.getData(),
+      });
+    });
   }
 
   componentWillReceiveProps(nextProps: Props) {
@@ -197,7 +204,7 @@ class Excel extends Component<Props, State> {
       >
         <Form
           ref="form"
-          fields={this.props.schema}
+          fields={this.schema}
           initialData={this.state.data[index]}
           readonly={readonly} />
       </Dialog>
@@ -209,7 +216,7 @@ class Excel extends Component<Props, State> {
       <table>
         <thead>
           <tr>
-            {this.props.schema.map(item => {
+            {this.schema.map(item => {
               if (!item.show) {
                 return null;
               }
@@ -235,7 +242,7 @@ class Excel extends Component<Props, State> {
             return (
               <tr key={rowidx}>{
                 Object.keys(row).map((cell, idx) => {
-                  const schema = this.props.schema[idx];
+                  const schema = this.schema[idx];
                   if (!schema || !schema.show) {
                     return null;
                   }
