@@ -76,22 +76,10 @@ var Whinepad = function (_Component) {
   }, {
     key: '_addNew',
     value: function _addNew(action) {
-      if (action === 'dismiss') {
-        this.setState({ addnew: false });
-        return;
+      this.setState({ addnew: false });
+      if (action === 'confirm') {
+        _CRUDActions2.default.create(this.refs.form.getData());
       }
-      var data = Array.from(_CRUDStore2.default.getData());
-      data.unshift(this.refs.form.getData());
-      this.setState({
-        addnew: false,
-        data: data
-      });
-      this._commitToStorage(data);
-    }
-  }, {
-    key: '_commitToStorage',
-    value: function _commitToStorage(data) {
-      localStorage.setItem('data', JSON.stringify(data));
     }
   }, {
     key: 'render',
@@ -117,7 +105,7 @@ var Whinepad = function (_Component) {
             'div',
             { className: 'WhinepadToolbarSearch' },
             _react2.default.createElement('input', {
-              placeholder: this.state.count + '\u4EF6\u304B\u3089\u691C\u7D22 ...',
+              placeholder: this.state.count + '\u4EF6\u304B\u3089\u691C\u7D22...',
               onChange: _CRUDActions2.default.search.bind(_CRUDActions2.default),
               onFocus: _CRUDActions2.default.startSearching.bind(_CRUDActions2.default),
               onBlur: _CRUDActions2.default.doneSearching.bind(_CRUDActions2.default) })

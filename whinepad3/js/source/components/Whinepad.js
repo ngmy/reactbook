@@ -45,21 +45,10 @@ class Whinepad extends Component<Props, State> {
   }
 
   _addNew(action: string) {
-    if (action === 'dismiss') {
-      this.setState({addnew: false});
-      return;
+    this.setState({addnew: false});
+    if (action === 'confirm') {
+      CRUDActions.create(this.refs.form.getData());
     }
-    let data = Array.from(CRUDStore.getData());
-    data.unshift(this.refs.form.getData());
-    this.setState({
-      addnew: false,
-      data: data,
-    });
-    this._commitToStorage(data);
-  }
-
-  _commitToStorage(data) {
-    localStorage.setItem('data', JSON.stringify(data));
   }
 
   render() {
@@ -76,7 +65,7 @@ class Whinepad extends Component<Props, State> {
           <div className="WhinepadToolbarSearch">
             <input
               placeholder={
-                `${this.state.count}件から検索 ...`
+                `${this.state.count}件から検索...`
               }
               onChange={CRUDActions.search.bind(CRUDActions)}
               onFocus={CRUDActions.startSearching.bind(CRUDActions)}
