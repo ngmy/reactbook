@@ -12,11 +12,7 @@ import invariant from 'invariant';
 
 type Data = Array<Object>;
 
-type Props = {
-  schema: Array<Object>,
-  initialData: Data,
-  onDataChange: Function,
-};
+type Props = Object;
 
 type EditState = {
   row: number,
@@ -40,6 +36,7 @@ class Excel extends Component<Props, State> {
 
   props: Props;
   state: State;
+  schema: Array<Object>;
 
   constructor(props: Props) {
     super(props);
@@ -62,10 +59,6 @@ class Excel extends Component<Props, State> {
     this.setState({data: nextProps.initialData});
   }
 
-  _fireDataChange(data: Data) {
-    this.props.onDataChange(data);
-  }
-
   _sortCallback(a: (string|number), b: (string|number), descending: boolean): number {
     let res: number = 0;
     if (typeof a === 'number' && typeof b === 'number') {
@@ -85,7 +78,6 @@ class Excel extends Component<Props, State> {
       sortby: key,
       descending: descending,
     });
-    this._fireDataChange(data);
   }
 
   _showEditor(e: Event) {
@@ -106,7 +98,6 @@ class Excel extends Component<Props, State> {
       edit: null,
       data: data,
     });
-    this._fireDataChange(data);
   }
 
   _actionClick(rowidx: number, action: string) {
@@ -126,7 +117,6 @@ class Excel extends Component<Props, State> {
       dialog: null,
       data: data,
     });
-    this._fireDataChange(data);
   }
 
   _closeDialog() {
@@ -146,7 +136,6 @@ class Excel extends Component<Props, State> {
       dialog: null,
       data: data,
     });
-    this._fireDataChange(data);
   }
 
   render() {
@@ -289,15 +278,5 @@ class Excel extends Component<Props, State> {
     );
   }
 }
-
-Excel.propTypes = {
-  schema: PropTypes.arrayOf(
-    PropTypes.object
-  ),
-  initialData: PropTypes.arrayOf(
-    PropTypes.object
-  ),
-  onDataChange: PropTypes.func,
-};
 
 export default Excel

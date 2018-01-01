@@ -513,11 +513,6 @@ var Excel = function (_Component) {
       this.setState({ data: nextProps.initialData });
     }
   }, {
-    key: '_fireDataChange',
-    value: function _fireDataChange(data) {
-      this.props.onDataChange(data);
-    }
-  }, {
     key: '_sortCallback',
     value: function _sortCallback(a, b, descending) {
       var res = 0;
@@ -543,7 +538,6 @@ var Excel = function (_Component) {
         sortby: key,
         descending: descending
       });
-      this._fireDataChange(data);
     }
   }, {
     key: '_showEditor',
@@ -566,7 +560,6 @@ var Excel = function (_Component) {
         edit: null,
         data: data
       });
-      this._fireDataChange(data);
     }
   }, {
     key: '_actionClick',
@@ -588,7 +581,6 @@ var Excel = function (_Component) {
         dialog: null,
         data: data
       });
-      this._fireDataChange(data);
     }
   }, {
     key: '_closeDialog',
@@ -610,7 +602,6 @@ var Excel = function (_Component) {
         dialog: null,
         data: data
       });
-      this._fireDataChange(data);
     }
   }, {
     key: 'render',
@@ -770,12 +761,6 @@ var Excel = function (_Component) {
   return Excel;
 }(_react.Component);
 
-Excel.propTypes = {
-  schema: _react.PropTypes.arrayOf(_react.PropTypes.object),
-  initialData: _react.PropTypes.arrayOf(_react.PropTypes.object),
-  onDataChange: _react.PropTypes.func
-};
-
 exports.default = Excel;
 },{"../flux/CRUDStore":14,"./Actions":4,"./Dialog":6,"./Form":8,"./FormInput":9,"./Rating":11,"classnames":16,"invariant":45,"react":198}],8:[function(require,module,exports){
 'use strict';
@@ -787,6 +772,10 @@ Object.defineProperty(exports, "__esModule", {
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _CRUDStore = require('../flux/CRUDStore');
+
+var _CRUDStore2 = _interopRequireDefault(_CRUDStore);
 
 var _FormInput = require('./FormInput');
 
@@ -811,10 +800,16 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 var Form = function (_Component) {
   _inherits(Form, _Component);
 
-  function Form() {
+  function Form(props) {
     _classCallCheck(this, Form);
 
-    return _possibleConstructorReturn(this, (Form.__proto__ || Object.getPrototypeOf(Form)).apply(this, arguments));
+    var _this = _possibleConstructorReturn(this, (Form.__proto__ || Object.getPrototypeOf(Form)).call(this, props));
+
+    _this.fields = _CRUDStore2.default.getSchema();
+    if ('recordId' in _this.props) {
+      _this.initialData = _CRUDStore2.default.getRecord(_this.props.recordId);
+    }
+    return _this;
   }
 
   _createClass(Form, [{
@@ -878,7 +873,7 @@ var Form = function (_Component) {
 }(_react.Component);
 
 exports.default = Form;
-},{"./FormInput":9,"./Rating":11,"react":198}],9:[function(require,module,exports){
+},{"../flux/CRUDStore":14,"./FormInput":9,"./Rating":11,"react":198}],9:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {

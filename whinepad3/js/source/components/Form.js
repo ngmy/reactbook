@@ -1,3 +1,4 @@
+import CRUDStore from '../flux/CRUDStore';
 import FormInput from './FormInput';
 import Rating from './Rating';
 import React, {Component} from 'react';
@@ -5,13 +6,22 @@ import React, {Component} from 'react';
 import type {FormInputField, FormInputFieldValue} from './FormInput';
 
 type Props = {
-  fields: Array<FormInputField>,
-  initialData?: Object,
   readonly?: boolean,
+  recordId: ?number,
 };
 
 class Form extends Component<Props> {
+  fields: Array<Object>;
+  initialData: ?Object;
   props: Props;
+
+  constructor(props: Props) {
+    super(props);
+    this.fields = CRUDStore.getSchema();
+    if ('recordId' in this.props) {
+      this.initialData = CRUDStore.getRecord(this.props.recordId);
+    }
+  }
 
   getData() {
     let data = {};

@@ -84,11 +84,6 @@ var Excel = function (_Component) {
       this.setState({ data: nextProps.initialData });
     }
   }, {
-    key: '_fireDataChange',
-    value: function _fireDataChange(data) {
-      this.props.onDataChange(data);
-    }
-  }, {
     key: '_sortCallback',
     value: function _sortCallback(a, b, descending) {
       var res = 0;
@@ -114,7 +109,6 @@ var Excel = function (_Component) {
         sortby: key,
         descending: descending
       });
-      this._fireDataChange(data);
     }
   }, {
     key: '_showEditor',
@@ -137,7 +131,6 @@ var Excel = function (_Component) {
         edit: null,
         data: data
       });
-      this._fireDataChange(data);
     }
   }, {
     key: '_actionClick',
@@ -159,7 +152,6 @@ var Excel = function (_Component) {
         dialog: null,
         data: data
       });
-      this._fireDataChange(data);
     }
   }, {
     key: '_closeDialog',
@@ -181,7 +173,6 @@ var Excel = function (_Component) {
         dialog: null,
         data: data
       });
-      this._fireDataChange(data);
     }
   }, {
     key: 'render',
@@ -340,11 +331,5 @@ var Excel = function (_Component) {
 
   return Excel;
 }(_react.Component);
-
-Excel.propTypes = {
-  schema: _react.PropTypes.arrayOf(_react.PropTypes.object),
-  initialData: _react.PropTypes.arrayOf(_react.PropTypes.object),
-  onDataChange: _react.PropTypes.func
-};
 
 exports.default = Excel;
