@@ -4,7 +4,7 @@ import classNames from 'classnames';
 import React from 'react';
 
 type Props = {
-  href: ?string,
+  href?: ?string,
   className: ?string,
 };
 

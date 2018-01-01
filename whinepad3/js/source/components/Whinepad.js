@@ -8,15 +8,12 @@ import Excel from './Excel';
 import Form from './Form';
 import React, {Component} from 'react';
 
-type Props = Object;
-
 type State = {
   addnew: boolean,
   count: number,
 };
 
-class Whinepad extends Component<Props, State> {
-  props: Props;
+class Whinepad extends Component<Object, State> {
   state: State;
 
   constructor() {
@@ -33,7 +30,7 @@ class Whinepad extends Component<Props, State> {
     });
   }
 
-  shouldComponentUpdate(newProps: Props, newState: State): boolean {
+  shouldComponentUpdate(newProps: Object, newState: State): boolean {
     return (
       newState.addnew !== this.state.addnew ||
       newState.count !== this.state.count

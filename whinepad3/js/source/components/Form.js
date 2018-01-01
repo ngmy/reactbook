@@ -9,7 +9,7 @@ import type {FormInputFieldValue} from './FormInput';
 
 type Props = {
   readonly?: boolean,
-  recordId: ?number,
+  recordId?: ?number,
 };
 
 class Form extends Component<Props> {
