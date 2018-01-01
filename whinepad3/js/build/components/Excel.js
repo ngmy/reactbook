@@ -110,13 +110,10 @@ var Excel = function (_Component) {
     key: '_save',
     value: function _save(e) {
       e.preventDefault();
-      var value = this.refs.input.getValue();
-      var data = Array.from(this.state.data);
       (0, _invariant2.default)(this.state.edit, 'ステートeditが不正です');
-      data[this.state.edit.row][this.state.edit.key] = value;
+      _CRUDActions2.default.updateField(this.state.edit.row, this.state.edit.key, this.refs.input.getValue());
       this.setState({
-        edit: null,
-        data: data
+        edit: null
       });
     }
   }, {
@@ -127,39 +124,24 @@ var Excel = function (_Component) {
   }, {
     key: '_deleteConfirmationClick',
     value: function _deleteConfirmationClick(action) {
+      this.setState({ dialog: null });
       if (action === 'dismiss') {
-        this._closeDialog();
         return;
       }
       var index = this.state.dialog ? this.state.dialog.idx : null;
       (0, _invariant2.default)(typeof index === 'number', 'ステートdialogが不正です');
-      var data = Array.from(this.state.data);
-      data.splice(index, 1);
-      this.setState({
-        dialog: null,
-        data: data
-      });
-    }
-  }, {
-    key: '_closeDialog',
-    value: function _closeDialog() {
-      this.setState({ dialog: null });
+      _CRUDActions2.default.delete(index);
     }
   }, {
     key: '_saveDataDialog',
     value: function _saveDataDialog(action) {
+      this.setState({ dialog: null });
       if (action === 'dismiss') {
-        this._closeDialog();
         return;
       }
       var index = this.state.dialog ? this.state.dialog.idx : null;
       (0, _invariant2.default)(typeof index === 'number', 'ステートdialogが不正です');
-      var data = Array.from(this.state.data);
-      data[index] = this.refs.form.getData();
-      this.setState({
-        dialog: null,
-        data: data
-      });
+      _CRUDActions2.default.updateRecord(index, this.refs.form.getData());
     }
   }, {
     key: 'render',

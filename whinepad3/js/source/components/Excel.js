@@ -79,13 +79,14 @@ class Excel extends Component<Props, State> {
 
   _save(e: Event) {
     e.preventDefault();
-    const value = this.refs.input.getValue();
-    let data = Array.from(this.state.data);
     invariant(this.state.edit, 'ステートeditが不正です');
-    data[this.state.edit.row][this.state.edit.key] = value;
+    CRUDActions.updateField(
+      this.state.edit.row,
+      this.state.edit.key,
+      this.refs.input.getValue()
+    );
     this.setState({
       edit: null,
-      data: data,
     });
   }
 
@@ -94,37 +95,23 @@ class Excel extends Component<Props, State> {
   }
 
   _deleteConfirmationClick(action: string) {
+    this.setState({dialog: null});
     if (action === 'dismiss') {
-      this._closeDialog();
       return;
     }
     const index = this.state.dialog ? this.state.dialog.idx : null;
     invariant(typeof index === 'number', 'ステートdialogが不正です');
-    let data = Array.from(this.state.data);
-    data.splice(index, 1);
-    this.setState({
-      dialog: null,
-      data: data,
-    });
-  }
-
-  _closeDialog() {
-    this.setState({dialog: null});
+    CRUDActions.delete(index);
   }
 
   _saveDataDialog(action: string) {
+    this.setState({dialog: null});
     if (action === 'dismiss') {
-      this._closeDialog();
       return;
     }
     const index = this.state.dialog ? this.state.dialog.idx : null;
     invariant(typeof index === 'number', 'ステートdialogが不正です');
-    let data = Array.from(this.state.data);
-    data[index] = this.refs.form.getData();
-    this.setState({
-      dialog: null,
-      data: data,
-    });
+    CRUDActions.updateRecord(index, this.refs.form.getData());
   }
 
   render() {
