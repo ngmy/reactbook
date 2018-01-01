@@ -1,3 +1,4 @@
+import CRUDStore from '../flux/CRUDStore';
 import Button from './Button';
 import Dialog from './Dialog';
 import Excel from './Excel';
@@ -8,10 +9,24 @@ class Whinepad extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      data: props.initialData,
       addnew: false,
+      count: CRUDStore.getCount(),
     };
+
+    CRUDStore.addListener('change', () => {
+      this.setState({
+        count: CRUDStore.getCount(),
+      })
+    });
+
     this._preSearchData = null;
+  }
+
+  shouldComponentUpdate(newProps: Object, newState: state): boolean {
+    return (
+      newState.addnew !== this.state.addnew ||
+      newState.count !== this.state.count
+    );
   }
 
   _addNewDialog() {
@@ -23,7 +38,7 @@ class Whinepad extends Component {
       this.setState({addnew: false});
       return;
     }
-    let data = Array.from(this.state.data);
+    let data = Array.from(CRUDStore.getData());
     data.unshift(this.refs.form.getData());
     this.setState({
       addnew: false,
@@ -32,17 +47,12 @@ class Whinepad extends Component {
     this._commitToStorage(data);
   }
 
-  _onExcelDataChange(data) {
-    this.setState({data: data});
-    this._commitToStorage(data);
-  }
-
   _commitToStorage(data) {
     localStorage.setItem('data', JSON.stringify(data));
   }
 
   _startSearching() {
-    this._preSearchData = this.state.data;
+    this._preSearchData = CRUDStore.getData();
   }
 
   _doneSearching() {
@@ -82,17 +92,16 @@ class Whinepad extends Component {
           </div>
           <div className="WhinepadToolbarSearch">
             <input
-              placeholder="検索 ..."
+              placeholder={
+                `${this.state.count}件から検索 ...`
+              }
               onChange={this._search.bind(this)}
               onFocus={this._startSearching.bind(this)}
               onBlur={this._doneSearching.bind(this)} />
           </div>
         </div>
         <div className="WhinepadDatagrid">
-          <Excel
-            schema={this.props.schema}
-            initialData={this.state.data}
-            onDataChange={this._onExcelDataChange.bind(this)} />
+          <Excel />
         </div>
         {this.state.addnew
           ? <Dialog

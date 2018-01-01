@@ -6,6 +6,10 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
+var _CRUDStore = require('../flux/CRUDStore');
+
+var _CRUDStore2 = _interopRequireDefault(_CRUDStore);
+
 var _Button = require('./Button');
 
 var _Button2 = _interopRequireDefault(_Button);
@@ -43,14 +47,26 @@ var Whinepad = function (_Component) {
     var _this = _possibleConstructorReturn(this, (Whinepad.__proto__ || Object.getPrototypeOf(Whinepad)).call(this, props));
 
     _this.state = {
-      data: props.initialData,
-      addnew: false
+      addnew: false,
+      count: _CRUDStore2.default.getCount()
     };
+
+    _CRUDStore2.default.addListener('change', function () {
+      _this.setState({
+        count: _CRUDStore2.default.getCount()
+      });
+    });
+
     _this._preSearchData = null;
     return _this;
   }
 
   _createClass(Whinepad, [{
+    key: 'shouldComponentUpdate',
+    value: function shouldComponentUpdate(newProps, newState) {
+      return newState.addnew !== this.state.addnew || newState.count !== this.state.count;
+    }
+  }, {
     key: '_addNewDialog',
     value: function _addNewDialog() {
       this.setState({ addnew: true });
@@ -62,18 +78,12 @@ var Whinepad = function (_Component) {
         this.setState({ addnew: false });
         return;
       }
-      var data = Array.from(this.state.data);
+      var data = Array.from(_CRUDStore2.default.getData());
       data.unshift(this.refs.form.getData());
       this.setState({
         addnew: false,
         data: data
       });
-      this._commitToStorage(data);
-    }
-  }, {
-    key: '_onExcelDataChange',
-    value: function _onExcelDataChange(data) {
-      this.setState({ data: data });
       this._commitToStorage(data);
     }
   }, {
@@ -84,7 +94,7 @@ var Whinepad = function (_Component) {
   }, {
     key: '_startSearching',
     value: function _startSearching() {
-      this._preSearchData = this.state.data;
+      this._preSearchData = _CRUDStore2.default.getData();
     }
   }, {
     key: '_doneSearching',
@@ -138,7 +148,7 @@ var Whinepad = function (_Component) {
             'div',
             { className: 'WhinepadToolbarSearch' },
             _react2.default.createElement('input', {
-              placeholder: '\u691C\u7D22 ...',
+              placeholder: this.state.count + '\u4EF6\u304B\u3089\u691C\u7D22 ...',
               onChange: this._search.bind(this),
               onFocus: this._startSearching.bind(this),
               onBlur: this._doneSearching.bind(this) })
@@ -147,10 +157,7 @@ var Whinepad = function (_Component) {
         _react2.default.createElement(
           'div',
           { className: 'WhinepadDatagrid' },
-          _react2.default.createElement(_Excel2.default, {
-            schema: this.props.schema,
-            initialData: this.state.data,
-            onDataChange: this._onExcelDataChange.bind(this) })
+          _react2.default.createElement(_Excel2.default, null)
         ),
         this.state.addnew ? _react2.default.createElement(
           _Dialog2.default,
