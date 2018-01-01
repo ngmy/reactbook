@@ -1235,8 +1235,6 @@ var Whinepad = function (_Component) {
         count: _CRUDStore2.default.getCount()
       });
     });
-
-    _this._preSearchData = null;
     return _this;
   }
 
