@@ -60,24 +60,18 @@ var CRUDActions = {
     }));
   },
   create: function create(newRecord) {
-    var data = _CRUDStore2.default.getData();
-    data.unshift(newRecord);
-    _CRUDStore2.default.setData(data);
+    _CRUDStore2.default.setData(_CRUDStore2.default.getData().unshift(newRecord));
   },
   delete: function _delete(recordId) {
-    var data = _CRUDStore2.default.getData();
-    data.splice(recordId, 1);
-    _CRUDStore2.default.setData(data);
+    _CRUDStore2.default.setData(_CRUDStore2.default.getData().remove(recordId));
   },
   updateRecord: function updateRecord(recordId, newRecord) {
-    var data = _CRUDStore2.default.getData();
-    data[recordId] = newRecord;
-    _CRUDStore2.default.setData(data);
+    _CRUDStore2.default.setData(_CRUDStore2.default.getData().set(recordId, newRecord));
   },
   updateField: function updateField(recordId, key, value) {
-    var data = _CRUDStore2.default.getData();
-    data[recordId][key] = value;
-    _CRUDStore2.default.setData(data);
+    var record = _CRUDStore2.default.getData().get(recordId);
+    record[key] = value;
+    _CRUDStore2.default.setData(_CRUDStore2.default.getData().set(recordId, record));
   }
 };
 

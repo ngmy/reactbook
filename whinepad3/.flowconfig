@@ -1,6 +1,7 @@
 [ignore]
 .*/react/node_modules/.*
 .*/fbemitter/node_modules/.*
+.*/node_modules/immutable/dist/immutable.js.flow
 
 [include]
 node_modules/react
@@ -8,6 +9,7 @@ node_modules/react-dom
 node_modules/classnames
 node_modules/invariant
 node_modules/fbemitter
+node_modules/immutable
 
 [libs]
 

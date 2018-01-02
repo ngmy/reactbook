@@ -48,6 +48,8 @@ var _invariant = require('invariant');
 
 var _invariant2 = _interopRequireDefault(_invariant);
 
+var _immutable = require('immutable');
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
@@ -170,7 +172,7 @@ var Excel = function (_Component) {
     value: function _renderDeleteDialog() {
       var index = this.state.dialog ? this.state.dialog.idx : null;
       (0, _invariant2.default)(typeof index === 'number', 'ステートdialogが不正です');
-      var first = this.state.data[index];
+      var first = this.state.data.get(index);
       var nameguess = first[Object.keys(first)[0]];
       return _react2.default.createElement(
         _Dialog2.default,

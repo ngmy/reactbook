@@ -40,6 +40,8 @@
     "babel-core": "^6.26.0",
     "babel-jest": "^22.0.4",
     "fbemitter": "^2.1.1",
+    "flow-bin": "^0.62.0",
+    "immutable": "^3.8.2",
     "invariant": "^2.2.2",
     "react-addons-test-utils": "^15.6.2"
   }

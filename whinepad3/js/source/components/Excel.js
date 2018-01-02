@@ -10,8 +10,9 @@ import Rating from './Rating';
 import React, {Component} from 'react';
 import classNames from 'classnames';
 import invariant from 'invariant';
+import {List} from 'immutable';
 
-type Data = Array<Object>;
+type Data = List<Object>;
 
 type Props = Object;
 
@@ -138,7 +139,7 @@ class Excel extends Component<Props, State> {
   _renderDeleteDialog() {
     const index = this.state.dialog ? this.state.dialog.idx : null;
     invariant(typeof index === 'number', 'ステートdialogが不正です');
-    const first = this.state.data[index];
+    const first = this.state.data.get(index);
     const nameguess = first[Object.keys(first)[0]];
     return (
       <Dialog
