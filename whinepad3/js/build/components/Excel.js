@@ -83,11 +83,6 @@ var Excel = function (_Component) {
   }
 
   _createClass(Excel, [{
-    key: 'componentWillReceiveProps',
-    value: function componentWillReceiveProps(nextProps) {
-      this.setState({ data: nextProps.initialData });
-    }
-  }, {
     key: '_sort',
     value: function _sort(key) {
       var descending = this.state.sortby === key && !this.state.descending;

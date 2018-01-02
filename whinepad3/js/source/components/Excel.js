@@ -56,10 +56,6 @@ class Excel extends Component<Props, State> {
     });
   }
 
-  componentWillReceiveProps(nextProps: Props) {
-    this.setState({data: nextProps.initialData});
-  }
-
   _sort(key: string) {
     const descending = this.state.sortby === key && !this.state.descending;
     CRUDActions.sort(key, descending);

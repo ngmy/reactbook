@@ -29,6 +29,9 @@ var CRUDActions = {
     var fields = _CRUDStore2.default.getSchema().map(function (item) {
       return item.id;
     });
+    if (!this._preSearchData) {
+      return;
+    }
     var searchdata = this._preSearchData.filter(function (row) {
       for (var f = 0; f < fields.length; f++) {
         if (row[fields[f]].toString().toLowerCase().indexOf(needle) > -1) {

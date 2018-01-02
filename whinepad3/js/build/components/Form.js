@@ -24,6 +24,10 @@ var _react = require('react');
 
 var _react2 = _interopRequireDefault(_react);
 
+var _invariant = require('invariant');
+
+var _invariant2 = _interopRequireDefault(_invariant);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -41,9 +45,9 @@ var Form = function (_Component) {
     var _this = _possibleConstructorReturn(this, (Form.__proto__ || Object.getPrototypeOf(Form)).call(this, props));
 
     _this.fields = _CRUDStore2.default.getSchema();
-    if ('recordId' in _this.props && _this.props.recordId) {
-      _this.initialData = _CRUDStore2.default.getRecord(_this.props.recordId);
-    }
+    var recordId = _this.props.recordId;
+    (0, _invariant2.default)(typeof recordId === 'number', 'プロップrecordIdが不正です');
+    _this.initialData = _CRUDStore2.default.getRecord(recordId);
     return _this;
   }
 

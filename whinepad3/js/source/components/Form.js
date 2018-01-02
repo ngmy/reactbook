@@ -4,6 +4,7 @@ import CRUDStore from '../flux/CRUDStore';
 import FormInput from './FormInput';
 import Rating from './Rating';
 import React, {Component} from 'react';
+import invariant from 'invariant';
 
 import type {FormInputFieldValue} from './FormInput';
 
@@ -20,9 +21,9 @@ class Form extends Component<Props> {
   constructor(props: Props) {
     super(props);
     this.fields = CRUDStore.getSchema();
-    if ('recordId' in this.props && this.props.recordId) {
-      this.initialData = CRUDStore.getRecord(this.props.recordId);
-    }
+    const recordId = this.props.recordId;
+    invariant(typeof recordId === 'number', 'プロップrecordIdが不正です');
+    this.initialData = CRUDStore.getRecord(recordId);
   }
 
   getData() {

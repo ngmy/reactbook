@@ -21,6 +21,9 @@ const CRUDActions = {
       return;
     }
     const fields = CRUDStore.getSchema().map(item => item.id);
+    if (!this._preSearchData) {
+      return;
+    }
     const searchdata = this._preSearchData.filter(row => {
       for (let f = 0; f < fields.length; f++) {
         if (row[fields[f]].toString().toLowerCase().indexOf(needle) > -1) {
