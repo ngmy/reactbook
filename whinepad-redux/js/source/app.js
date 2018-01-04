@@ -2,14 +2,15 @@
 
 'use strict';
 
-import CRUDStore from './flux/CRUDStore';
-import Logo from './components/Logo';
+import {Provider} from 'react-redux';
+import {createStore} from 'redux'
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Whinepad from './components/Whinepad';
-import schema from './schema';
+import whinepadApp from './redux/reducers'
+import Whinepad from './redux/containers/Whinepad';
+import Logo from './components/Logo';
 
-CRUDStore.init(schema);
+let store = createStore(whinepadApp);
 
 const pad = document.getElementById('pad');
 
@@ -22,7 +23,9 @@ ReactDOM.render(
     <div className="app-header">
       <Logo /> Whinepadにようこそ！
     </div>
-    <Whinepad />
+    <Provider store={store}>
+      <Whinepad />
+    </Provider>
   </div>,
   pad
 );
