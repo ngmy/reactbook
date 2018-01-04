@@ -187,6 +187,10 @@ process.umask = function() { return 0; };
 },{}],2:[function(require,module,exports){
 'use strict';
 
+var _reduxThunk = require('redux-thunk');
+
+var _reduxThunk2 = _interopRequireDefault(_reduxThunk);
+
 var _reactRedux = require('react-redux');
 
 var _redux = require('redux');
@@ -213,7 +217,7 @@ var _Logo2 = _interopRequireDefault(_Logo);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var store = (0, _redux.createStore)(_reducers2.default);
+var store = (0, _redux.createStore)(_reducers2.default, (0, _redux.applyMiddleware)(_reduxThunk2.default));
 
 var pad = document.getElementById('pad');
 
@@ -236,7 +240,7 @@ _reactDom2.default.render(_react2.default.createElement(
     _react2.default.createElement(_Whinepad2.default, null)
   )
 ), pad);
-},{"./components/Logo":8,"./redux/containers/Whinepad":14,"./redux/reducers":16,"react":227,"react-dom":61,"react-redux":197,"redux":233}],3:[function(require,module,exports){
+},{"./components/Logo":8,"./redux/containers/Whinepad":14,"./redux/reducers":16,"react":227,"react-dom":61,"react-redux":197,"redux":234,"redux-thunk":228}],3:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -758,33 +762,77 @@ var doneSearching = exports.doneSearching = function doneSearching() {
   };
 };
 
+//export const createRecord = (newRecord: Object) => ({
+//  type: 'CREATE_RECORD',
+//  newRecord,
+//})
+
 var createRecord = exports.createRecord = function createRecord(newRecord) {
-  return {
-    type: 'CREATE_RECORD',
-    newRecord: newRecord
+  return function (dispatch, getState) {
+    dispatch({
+      type: 'CREATE_RECORD',
+      newRecord: newRecord
+    });
+    var newData = getState().crud.data;
+    // TODO server-side persistence
+    if ('localStorage' in window) {
+      localStorage.setItem('data', JSON.stringify(newData));
+    }
+    dispatch(doneSaveData(newData));
   };
 };
 
 var deleteRecord = exports.deleteRecord = function deleteRecord(recordId) {
-  return {
-    type: 'DELETE_RECORD',
-    recordId: recordId
+  return function (dispatch, getState) {
+    dispatch({
+      type: 'DELETE_RECORD',
+      recordId: recordId
+    });
+    var newData = getState().crud.data;
+    // TODO server-side persistence
+    if ('localStorage' in window) {
+      localStorage.setItem('data', JSON.stringify(newData));
+    }
+    dispatch(doneSaveData(newData));
   };
 };
 
 var updateRecord = exports.updateRecord = function updateRecord(recordId, newRecord) {
-  return {
-    type: 'UPDATE_RECORD',
-    recordId: recordId,
-    newRecord: newRecord
+  return function (dispatch, getState) {
+    dispatch({
+      type: 'UPDATE_RECORD',
+      recordId: recordId,
+      newRecord: newRecord
+    });
+    var newData = getState().crud.data;
+    // TODO server-side persistence
+    if ('localStorage' in window) {
+      localStorage.setItem('data', JSON.stringify(newData));
+    }
+    dispatch(doneSaveData(newData));
   };
 };
 
 var updateField = exports.updateField = function updateField(recordId, key, value) {
+  return function (dispatch, getState) {
+    dispatch({
+      type: 'UPDATE_FIELD',
+      key: key,
+      value: value
+    });
+    var newData = getState().crud.data;
+    // TODO server-side persistence
+    if ('localStorage' in window) {
+      localStorage.setItem('data', JSON.stringify(newData));
+    }
+    dispatch(doneSaveData(newData));
+  };
+};
+
+var doneSaveData = exports.doneSaveData = function doneSaveData(newData) {
   return {
-    type: 'UPDATE_FIELD',
-    key: key,
-    value: value
+    type: 'DONE_SAVE_DATA',
+    newData: newData
   };
 };
 
@@ -1423,9 +1471,6 @@ var crud = function crud(state, action) {
     case 'CREATE_RECORD':
       {
         var _newData = state.data.unshift(action.newRecord);
-        if ('localStorage' in window) {
-          localStorage.setItem('data', JSON.stringify(_newData));
-        }
         return Object.assign({}, state, {
           data: _newData
         });
@@ -1433,9 +1478,6 @@ var crud = function crud(state, action) {
     case 'DELETE_RECORD':
       {
         var _newData2 = state.data.remove(action.recordId);
-        if ('localStorage' in window) {
-          localStorage.setItem('data', JSON.stringify(_newData2));
-        }
         return Object.assign({}, state, {
           data: _newData2
         });
@@ -1443,9 +1485,6 @@ var crud = function crud(state, action) {
     case 'UPDATE_RECORD':
       {
         var _newData3 = state.data.set(action.recordId, action.newRecord);
-        if ('localStorage' in window) {
-          localStorage.setItem('data', JSON.stringify(_newData3));
-        }
         return Object.assign({}, state, {
           data: _newData3
         });
@@ -1455,11 +1494,14 @@ var crud = function crud(state, action) {
         var record = state.data.get(action.recordId);
         record[action.key] = action.value;
         var _newData4 = state.data.set(action.recordId, record);
-        if ('localStorage' in window) {
-          localStorage.setItem('data', JSON.stringify(_newData4));
-        }
         return Object.assign({}, state, {
           data: _newData4
+        });
+      }
+    case 'DONE_SAVE_DATA':
+      {
+        return Object.assign({}, state, {
+          data: action.newData
         });
       }
     default:
@@ -1505,7 +1547,7 @@ var whinepadApp = (0, _redux.combineReducers)({
 });
 
 exports.default = whinepadApp;
-},{"./crud":15,"redux":233}],17:[function(require,module,exports){
+},{"./crud":15,"redux":234}],17:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -25287,7 +25329,7 @@ function whenMapDispatchToPropsIsObject(mapDispatchToProps) {
 }
 
 exports.default = [whenMapDispatchToPropsIsFunction, whenMapDispatchToPropsIsMissing, whenMapDispatchToPropsIsObject];
-},{"./wrapMapToProps":196,"redux":233}],192:[function(require,module,exports){
+},{"./wrapMapToProps":196,"redux":234}],192:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -28987,6 +29029,30 @@ module.exports = require('./lib/React');
 'use strict';
 
 exports.__esModule = true;
+function createThunkMiddleware(extraArgument) {
+  return function (_ref) {
+    var dispatch = _ref.dispatch,
+        getState = _ref.getState;
+    return function (next) {
+      return function (action) {
+        if (typeof action === 'function') {
+          return action(dispatch, getState, extraArgument);
+        }
+
+        return next(action);
+      };
+    };
+  };
+}
+
+var thunk = createThunkMiddleware();
+thunk.withExtraArgument = createThunkMiddleware;
+
+exports['default'] = thunk;
+},{}],229:[function(require,module,exports){
+'use strict';
+
+exports.__esModule = true;
 
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
@@ -29042,7 +29108,7 @@ function applyMiddleware() {
     };
   };
 }
-},{"./compose":231}],229:[function(require,module,exports){
+},{"./compose":232}],230:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -29094,7 +29160,7 @@ function bindActionCreators(actionCreators, dispatch) {
   }
   return boundActionCreators;
 }
-},{}],230:[function(require,module,exports){
+},{}],231:[function(require,module,exports){
 (function (process){
 'use strict';
 
@@ -29240,7 +29306,7 @@ function combineReducers(reducers) {
   };
 }
 }).call(this,require('_process'))
-},{"./createStore":232,"./utils/warning":234,"_process":1,"lodash/isPlainObject":54}],231:[function(require,module,exports){
+},{"./createStore":233,"./utils/warning":235,"_process":1,"lodash/isPlainObject":54}],232:[function(require,module,exports){
 "use strict";
 
 exports.__esModule = true;
@@ -29277,7 +29343,7 @@ function compose() {
     };
   });
 }
-},{}],232:[function(require,module,exports){
+},{}],233:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -29539,7 +29605,7 @@ var ActionTypes = exports.ActionTypes = {
     replaceReducer: replaceReducer
   }, _ref2[_symbolObservable2['default']] = observable, _ref2;
 }
-},{"lodash/isPlainObject":54,"symbol-observable":235}],233:[function(require,module,exports){
+},{"lodash/isPlainObject":54,"symbol-observable":236}],234:[function(require,module,exports){
 (function (process){
 'use strict';
 
@@ -29588,7 +29654,7 @@ exports.bindActionCreators = _bindActionCreators2['default'];
 exports.applyMiddleware = _applyMiddleware2['default'];
 exports.compose = _compose2['default'];
 }).call(this,require('_process'))
-},{"./applyMiddleware":228,"./bindActionCreators":229,"./combineReducers":230,"./compose":231,"./createStore":232,"./utils/warning":234,"_process":1}],234:[function(require,module,exports){
+},{"./applyMiddleware":229,"./bindActionCreators":230,"./combineReducers":231,"./compose":232,"./createStore":233,"./utils/warning":235,"_process":1}],235:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -29614,10 +29680,10 @@ function warning(message) {
   } catch (e) {}
   /* eslint-enable no-empty */
 }
-},{}],235:[function(require,module,exports){
+},{}],236:[function(require,module,exports){
 module.exports = require('./lib/index');
 
-},{"./lib/index":236}],236:[function(require,module,exports){
+},{"./lib/index":237}],237:[function(require,module,exports){
 (function (global){
 'use strict';
 
@@ -29649,7 +29715,7 @@ if (typeof self !== 'undefined') {
 var result = (0, _ponyfill2['default'])(root);
 exports['default'] = result;
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"./ponyfill.js":237}],237:[function(require,module,exports){
+},{"./ponyfill.js":238}],238:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {

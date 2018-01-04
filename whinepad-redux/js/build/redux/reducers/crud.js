@@ -73,9 +73,6 @@ var crud = function crud(state, action) {
     case 'CREATE_RECORD':
       {
         var _newData = state.data.unshift(action.newRecord);
-        if ('localStorage' in window) {
-          localStorage.setItem('data', JSON.stringify(_newData));
-        }
         return Object.assign({}, state, {
           data: _newData
         });
@@ -83,9 +80,6 @@ var crud = function crud(state, action) {
     case 'DELETE_RECORD':
       {
         var _newData2 = state.data.remove(action.recordId);
-        if ('localStorage' in window) {
-          localStorage.setItem('data', JSON.stringify(_newData2));
-        }
         return Object.assign({}, state, {
           data: _newData2
         });
@@ -93,9 +87,6 @@ var crud = function crud(state, action) {
     case 'UPDATE_RECORD':
       {
         var _newData3 = state.data.set(action.recordId, action.newRecord);
-        if ('localStorage' in window) {
-          localStorage.setItem('data', JSON.stringify(_newData3));
-        }
         return Object.assign({}, state, {
           data: _newData3
         });
@@ -105,11 +96,14 @@ var crud = function crud(state, action) {
         var record = state.data.get(action.recordId);
         record[action.key] = action.value;
         var _newData4 = state.data.set(action.recordId, record);
-        if ('localStorage' in window) {
-          localStorage.setItem('data', JSON.stringify(_newData4));
-        }
         return Object.assign({}, state, {
           data: _newData4
+        });
+      }
+    case 'DONE_SAVE_DATA':
+      {
+        return Object.assign({}, state, {
+          data: action.newData
         });
       }
     default:

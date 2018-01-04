@@ -2,15 +2,21 @@
 
 'use strict';
 
+import thunk from 'redux-thunk';
 import {Provider} from 'react-redux';
-import {createStore} from 'redux'
+import {createStore, applyMiddleware} from 'redux'
 import React from 'react';
 import ReactDOM from 'react-dom';
 import whinepadApp from './redux/reducers'
 import Whinepad from './redux/containers/Whinepad';
 import Logo from './components/Logo';
 
-let store = createStore(whinepadApp);
+let store = createStore(
+  whinepadApp,
+  applyMiddleware(
+    thunk
+  )
+);
 
 const pad = document.getElementById('pad');
 

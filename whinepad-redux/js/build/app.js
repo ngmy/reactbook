@@ -1,5 +1,9 @@
 'use strict';
 
+var _reduxThunk = require('redux-thunk');
+
+var _reduxThunk2 = _interopRequireDefault(_reduxThunk);
+
 var _reactRedux = require('react-redux');
 
 var _redux = require('redux');
@@ -26,7 +30,7 @@ var _Logo2 = _interopRequireDefault(_Logo);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var store = (0, _redux.createStore)(_reducers2.default);
+var store = (0, _redux.createStore)(_reducers2.default, (0, _redux.applyMiddleware)(_reduxThunk2.default));
 
 var pad = document.getElementById('pad');
 
