@@ -2,7 +2,7 @@
 
 import Dialog from './components/Dialog';
 import Actions from './components/Actions';
-import Form from './components/Form';
+import Form from './redux/containers/Form';
 import FormInput from './components/FormInput';
 import Rating from './components/Rating';
 import Suggest from './components/Suggest';
@@ -10,6 +10,17 @@ import Button from './components/Button';
 import Logo from './components/Logo';
 import React from 'react';
 import ReactDOM from 'react-dom';
+import {createStore, applyMiddleware} from 'redux'
+import {Provider} from 'react-redux';
+import thunk from 'redux-thunk';
+import whinepadApp from './redux/reducers'
+
+let store = createStore(
+  whinepadApp,
+  applyMiddleware(
+    thunk
+  )
+);
 
 ReactDOM.render(
   <div style={ {padding: '20px'} }>
@@ -67,21 +78,25 @@ ReactDOM.render(
     </tbody></table>
 
     <h2>Form</h2>
-    <Form
-      fields={[
-        {label: '評価', type: 'rating', id: 'rateme'},
-        {label: 'あいさつ', id: 'freetext'},
-      ]}
-      initialData={{rateme: 4, freetext: 'Hello'}} />
+    <Provider store={store}>
+      <Form
+        fields={[
+          {label: '評価', type: 'rating', id: 'rateme'},
+          {label: 'あいさつ', id: 'freetext'},
+        ]}
+        initialData={{rateme: 4, freetext: 'Hello'}} />
+    </Provider>
 
     <h2>読み取り専用のForm</h2>
-    <Form
-      fields={[
-        {label: '評価', type: 'rating', id: 'rateme'},
-        {label: 'あいさつ', id: 'freetext'},
-      ]}
-      initialData={{rateme: 4, freetext: 'Hello'}}
-      readonly={true} />
+    <Provider store={store}>
+      <Form
+        fields={[
+          {label: '評価', type: 'rating', id: 'rateme'},
+          {label: 'あいさつ', id: 'freetext'},
+        ]}
+        initialData={{rateme: 4, freetext: 'Hello'}}
+        readonly={true} />
+    </Provider>
 
     <h2>操作</h2>
     <div><Actions onAction={type => alert(type)} /></div>

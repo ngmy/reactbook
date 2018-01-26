@@ -8,7 +8,7 @@ var _Actions = require('./components/Actions');
 
 var _Actions2 = _interopRequireDefault(_Actions);
 
-var _Form = require('./components/Form');
+var _Form = require('./redux/containers/Form');
 
 var _Form2 = _interopRequireDefault(_Form);
 
@@ -40,7 +40,21 @@ var _reactDom = require('react-dom');
 
 var _reactDom2 = _interopRequireDefault(_reactDom);
 
+var _redux = require('redux');
+
+var _reactRedux = require('react-redux');
+
+var _reduxThunk = require('redux-thunk');
+
+var _reduxThunk2 = _interopRequireDefault(_reduxThunk);
+
+var _reducers = require('./redux/reducers');
+
+var _reducers2 = _interopRequireDefault(_reducers);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var store = (0, _redux.createStore)(_reducers2.default, (0, _redux.applyMiddleware)(_reduxThunk2.default));
 
 _reactDom2.default.render(_react2.default.createElement(
   'div',
@@ -241,18 +255,26 @@ _reactDom2.default.render(_react2.default.createElement(
     null,
     'Form'
   ),
-  _react2.default.createElement(_Form2.default, {
-    fields: [{ label: '評価', type: 'rating', id: 'rateme' }, { label: 'あいさつ', id: 'freetext' }],
-    initialData: { rateme: 4, freetext: 'Hello' } }),
+  _react2.default.createElement(
+    _reactRedux.Provider,
+    { store: store },
+    _react2.default.createElement(_Form2.default, {
+      fields: [{ label: '評価', type: 'rating', id: 'rateme' }, { label: 'あいさつ', id: 'freetext' }],
+      initialData: { rateme: 4, freetext: 'Hello' } })
+  ),
   _react2.default.createElement(
     'h2',
     null,
     '\u8AAD\u307F\u53D6\u308A\u5C02\u7528\u306EForm'
   ),
-  _react2.default.createElement(_Form2.default, {
-    fields: [{ label: '評価', type: 'rating', id: 'rateme' }, { label: 'あいさつ', id: 'freetext' }],
-    initialData: { rateme: 4, freetext: 'Hello' },
-    readonly: true }),
+  _react2.default.createElement(
+    _reactRedux.Provider,
+    { store: store },
+    _react2.default.createElement(_Form2.default, {
+      fields: [{ label: '評価', type: 'rating', id: 'rateme' }, { label: 'あいさつ', id: 'freetext' }],
+      initialData: { rateme: 4, freetext: 'Hello' },
+      readonly: true })
+  ),
   _react2.default.createElement(
     'h2',
     null,
