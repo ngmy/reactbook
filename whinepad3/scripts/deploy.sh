@@ -3,7 +3,7 @@ mkdir __deployme
 
 sh scripts/build.sh
 
-uglify -d bundle.js -o __deployme/bundle.js
+uglify -s bundle.js -o __deployme/bundle.js
 
 cssshrink bundle.css > __deployme/bundle.css
 
