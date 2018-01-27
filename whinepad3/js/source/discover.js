@@ -74,9 +74,7 @@ ReactDOM.render(
     <Form />
 
     <h2>読み取り専用のForm</h2>
-    <Form
-      initialData={{rateme: 4, freetext: 'Hello'}}
-      readonly={true} />
+    <Form readonly={true} />
 
     <h2>操作</h2>
     <div><Actions onAction={type => alert(type)} /></div>
