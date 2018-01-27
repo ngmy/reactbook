@@ -10,6 +10,10 @@ import Button from './components/Button';
 import Logo from './components/Logo';
 import React from 'react';
 import ReactDOM from 'react-dom';
+import CRUDStore from './flux/CRUDStore';
+import schema from './schema';
+
+CRUDStore.init(schema);
 
 ReactDOM.render(
   <div style={ {padding: '20px'} }>
