@@ -57,8 +57,12 @@ class DropdownMenu extends Component<Props> {
 
   render() {
     var options = this._getOptions();
+    var propsForSelectTag = Object.assign({}, this.props);
+    delete(propsForSelectTag.options);
+    delete(propsForSelectTag.groupBy);
     return (
       <select
+        {...propsForSelectTag}
         defaultValue={this.props.selected}
         selected={this.props.selected}
       >

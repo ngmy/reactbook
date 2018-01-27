@@ -441,6 +441,8 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 var _react = require('react');
@@ -511,12 +513,15 @@ var DropdownMenu = function (_Component) {
     key: 'render',
     value: function render() {
       var options = this._getOptions();
+      var propsForSelectTag = Object.assign({}, this.props);
+      delete propsForSelectTag.options;
+      delete propsForSelectTag.groupBy;
       return _react2.default.createElement(
         'select',
-        {
+        _extends({}, propsForSelectTag, {
           defaultValue: this.props.selected,
           selected: this.props.selected
-        },
+        }),
         _react2.default.createElement(
           'option',
           null,

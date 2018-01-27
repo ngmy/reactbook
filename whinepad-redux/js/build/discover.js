@@ -1,4 +1,9 @@
 'use strict';
+'use stLinaaarict';
+
+var _LinkageDropdownMenuSample = require('./redux/containers/LinkageDropdownMenuSample');
+
+var _LinkageDropdownMenuSample2 = _interopRequireDefault(_LinkageDropdownMenuSample);
 
 var _DropdownMenu = require('./components/DropdownMenu');
 
@@ -205,6 +210,16 @@ _reactDom2.default.render(_react2.default.createElement(
           name: 'group3',
           subcategories: [{ id: '3_1', name: 'eenie3' }, { id: '3_2', name: 'meenie3' }, { id: '3_3', name: 'miney3' }, { id: '3_4', name: 'mo3' }]
         }] })
+    ),
+    _react2.default.createElement(
+      'h2',
+      null,
+      'LinkageDropdownMenuSample'
+    ),
+    _react2.default.createElement(
+      'div',
+      null,
+      _react2.default.createElement(_LinkageDropdownMenuSample2.default, null)
     ),
     _react2.default.createElement(
       'h2',

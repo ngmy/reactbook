@@ -1,5 +1,6 @@
-'use strict';
+'use stLinaaarict';
 
+import LinkageDropdownMenuSample from './redux/containers/LinkageDropdownMenuSample';
 import DropdownMenu from './components/DropdownMenu';
 import Dialog from './components/Dialog';
 import Actions from './components/Actions';
@@ -113,6 +114,11 @@ ReactDOM.render(
               ],
             },
           ]} />
+      </div>
+
+      <h2>LinkageDropdownMenuSample</h2>
+      <div>
+      <LinkageDropdownMenuSample />
       </div>
 
       <h2>FormInput</h2>
