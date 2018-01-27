@@ -251,13 +251,15 @@ _reactDom2.default.render(_react2.default.createElement(
     null,
     'Form'
   ),
-  _react2.default.createElement(_Form2.default, null),
+  _react2.default.createElement(_Form2.default, { recordId: 0 }),
   _react2.default.createElement(
     'h2',
     null,
     '\u8AAD\u307F\u53D6\u308A\u5C02\u7528\u306EForm'
   ),
-  _react2.default.createElement(_Form2.default, { readonly: true }),
+  _react2.default.createElement(_Form2.default, {
+    recordId: 0,
+    readonly: true }),
   _react2.default.createElement(
     'h2',
     null,

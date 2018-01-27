@@ -71,10 +71,12 @@ ReactDOM.render(
     </tbody></table>
 
     <h2>Form</h2>
-    <Form />
+    <Form recordId={0} />
 
     <h2>読み取り専用のForm</h2>
-    <Form readonly={true} />
+    <Form
+      recordId={0}
+      readonly={true} />
 
     <h2>操作</h2>
     <div><Actions onAction={type => alert(type)} /></div>
