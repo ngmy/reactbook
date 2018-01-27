@@ -1,6 +1,29 @@
-import React, {Component, PropTypes} from 'react';
+/* @flow */
 
-class DropdownMenu extends Component {
+import React, {Component} from 'react';
+
+export type Option = {
+  id: string,
+  name: string,
+  [string]: Array<Option>
+}
+
+export type Props = {
+  groupBy: string,
+  options: Array<Option>,
+  placeholder?: string,
+  selected: string,
+}
+
+class DropdownMenu extends Component<Props> {
+  props: Props
+
+  static defaultProps = {
+    options: [],
+    groupBy: null,
+    selected: null,
+  };
+
   _getOptions() {
     var options = this.props.options;
     if (this.props.groupBy) {
@@ -10,7 +33,7 @@ class DropdownMenu extends Component {
     }
   }
 
-  _getOptgroupTags(groups) {
+  _getOptgroupTags(groups: Array<Option>) {
     var optgroups = groups.map(group => {
       var children = this._getOptionTags(group[this.props.groupBy]);
       return (
@@ -22,13 +45,13 @@ class DropdownMenu extends Component {
     return optgroups;
   }
 
-  _getOptionTags(options) {
+  _getOptionTags(options: Array<Option>) {
     return options.map(option => {
       return this._getOptionTag(option);
     });
   }
 
-  _getOptionTag(option) {
+  _getOptionTag(option: Option) {
     return <option value={option.id} key={option.id}>{option.name}</option>;
   }
 
@@ -45,18 +68,5 @@ class DropdownMenu extends Component {
     )
   }
 }
-
-DropdownMenu.propTypes = {
-  groupBy: PropTypes.string,
-  options: PropTypes.array.isRequired,
-  placeholder: PropTypes.string,
-  selected: PropTypes.string,
-};
-
-DropdownMenu.defaultProps = {
-  options: [],
-  groupBy: null,
-  selected: null,
-};
 
 export default DropdownMenu

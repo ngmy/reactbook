@@ -3,8 +3,11 @@
 import Rating from './Rating';
 import React, {Component} from 'react';
 import Suggest from './Suggest';
+import DropdownMenu from './DropdownMenu';
 
-type FormInputFieldType = 'year' | 'suggest' | 'rating' | 'text' | 'input';
+import type {Option as DropdownMenuOption} from './DropdownMenu'
+
+type FormInputFieldType = 'year' | 'suggest' | 'rating' | 'text' | 'input' | 'select';
 
 export type FormInputFieldValue = string | number;
 
@@ -12,8 +15,11 @@ export type FormInputField = {
   type: FormInputFieldType,
   defaultValue?: FormInputFieldValue,
   id?: string,
-  options: Array<string>,
+  options: Array<string> | Array<DropdownMenuOption>,
   label?: string,
+  groupBy?: string,
+  placeholder?: string,
+  selected?: string,
 };
 
 class FormInput extends Component<FormInputField> {
@@ -46,6 +52,15 @@ class FormInput extends Component<FormInputField> {
         <Rating
           {...common}
           defaultValue={parseInt(this.props.defaultValue, 10)} />
+      );
+    case 'select':
+      return (
+        <DropdownMenu
+          {...common}
+          groupBy={this.props.groupBy}
+          options={this.props.options}
+          placeholder={this.props.placeholder}
+          selected={this.props.selected} />
       );
     case 'text':
       return <textarea {...common} />;

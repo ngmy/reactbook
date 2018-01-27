@@ -145,11 +145,22 @@ ReactDOM.render(
           <td>単純なテキストエリア</td>
           <td><FormInput type="text" /></td>
         </tr>
+        <tr>
+          <td>単純なドロップダウンメニュー</td>
+          <td><FormInput
+            type="select"
+            options={[
+              {id: '1', name: 'eenie'},
+              {id: '2', name: 'meenie'},
+              {id: '3', name: 'miney'},
+              {id: '4', name: 'mo'},
+            ]} />
+          </td>
+        </tr>
       </tbody></table>
 
       <h2>Form</h2>
       <Form recordId={0} />
-
 
       <h2>読み取り専用のForm</h2>
       <Form

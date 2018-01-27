@@ -303,6 +303,22 @@ _reactDom2.default.render(_react2.default.createElement(
             null,
             _react2.default.createElement(_FormInput2.default, { type: 'text' })
           )
+        ),
+        _react2.default.createElement(
+          'tr',
+          null,
+          _react2.default.createElement(
+            'td',
+            null,
+            '\u5358\u7D14\u306A\u30C9\u30ED\u30C3\u30D7\u30C0\u30A6\u30F3\u30E1\u30CB\u30E5\u30FC'
+          ),
+          _react2.default.createElement(
+            'td',
+            null,
+            _react2.default.createElement(_FormInput2.default, {
+              type: 'select',
+              options: [{ id: '1', name: 'eenie' }, { id: '2', name: 'meenie' }, { id: '3', name: 'miney' }, { id: '4', name: 'mo' }] })
+          )
         )
       )
     ),

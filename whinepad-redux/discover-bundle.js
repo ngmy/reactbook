@@ -474,19 +474,11 @@ var DropdownMenu = function (_Component) {
   return DropdownMenu;
 }(_react.Component);
 
-DropdownMenu.propTypes = {
-  groupBy: _react.PropTypes.string,
-  options: _react.PropTypes.array.isRequired,
-  placeholder: _react.PropTypes.string,
-  selected: _react.PropTypes.string
-};
-
 DropdownMenu.defaultProps = {
   options: [],
   groupBy: null,
   selected: null
 };
-
 exports.default = DropdownMenu;
 },{"react":225}],7:[function(require,module,exports){
 'use strict';
@@ -510,6 +502,10 @@ var _react2 = _interopRequireDefault(_react);
 var _Suggest = require('./Suggest');
 
 var _Suggest2 = _interopRequireDefault(_Suggest);
+
+var _DropdownMenu = require('./DropdownMenu');
+
+var _DropdownMenu2 = _interopRequireDefault(_DropdownMenu);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -552,6 +548,12 @@ var FormInput = function (_Component) {
         case 'rating':
           return _react2.default.createElement(_Rating2.default, _extends({}, common, {
             defaultValue: parseInt(this.props.defaultValue, 10) }));
+        case 'select':
+          return _react2.default.createElement(_DropdownMenu2.default, _extends({}, common, {
+            groupBy: this.props.groupBy,
+            options: this.props.options,
+            placeholder: this.props.placeholder,
+            selected: this.props.selected }));
         case 'text':
           return _react2.default.createElement('textarea', common);
         default:
@@ -564,7 +566,7 @@ var FormInput = function (_Component) {
 }(_react.Component);
 
 exports.default = FormInput;
-},{"./Rating":9,"./Suggest":10,"react":225}],8:[function(require,module,exports){
+},{"./DropdownMenu":6,"./Rating":9,"./Suggest":10,"react":225}],8:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -1096,6 +1098,22 @@ _reactDom2.default.render(_react2.default.createElement(
             'td',
             null,
             _react2.default.createElement(_FormInput2.default, { type: 'text' })
+          )
+        ),
+        _react2.default.createElement(
+          'tr',
+          null,
+          _react2.default.createElement(
+            'td',
+            null,
+            '\u5358\u7D14\u306A\u30C9\u30ED\u30C3\u30D7\u30C0\u30A6\u30F3\u30E1\u30CB\u30E5\u30FC'
+          ),
+          _react2.default.createElement(
+            'td',
+            null,
+            _react2.default.createElement(_FormInput2.default, {
+              type: 'select',
+              options: [{ id: '1', name: 'eenie' }, { id: '2', name: 'meenie' }, { id: '3', name: 'miney' }, { id: '4', name: 'mo' }] })
           )
         )
       )

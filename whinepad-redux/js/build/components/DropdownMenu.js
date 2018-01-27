@@ -93,17 +93,9 @@ var DropdownMenu = function (_Component) {
   return DropdownMenu;
 }(_react.Component);
 
-DropdownMenu.propTypes = {
-  groupBy: _react.PropTypes.string,
-  options: _react.PropTypes.array.isRequired,
-  placeholder: _react.PropTypes.string,
-  selected: _react.PropTypes.string
-};
-
 DropdownMenu.defaultProps = {
   options: [],
   groupBy: null,
   selected: null
 };
-
 exports.default = DropdownMenu;

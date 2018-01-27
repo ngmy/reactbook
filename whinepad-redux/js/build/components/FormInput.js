@@ -20,6 +20,10 @@ var _Suggest = require('./Suggest');
 
 var _Suggest2 = _interopRequireDefault(_Suggest);
 
+var _DropdownMenu = require('./DropdownMenu');
+
+var _DropdownMenu2 = _interopRequireDefault(_DropdownMenu);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -61,6 +65,12 @@ var FormInput = function (_Component) {
         case 'rating':
           return _react2.default.createElement(_Rating2.default, _extends({}, common, {
             defaultValue: parseInt(this.props.defaultValue, 10) }));
+        case 'select':
+          return _react2.default.createElement(_DropdownMenu2.default, _extends({}, common, {
+            groupBy: this.props.groupBy,
+            options: this.props.options,
+            placeholder: this.props.placeholder,
+            selected: this.props.selected }));
         case 'text':
           return _react2.default.createElement('textarea', common);
         default:
