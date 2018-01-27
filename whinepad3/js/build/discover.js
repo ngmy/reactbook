@@ -251,16 +251,13 @@ _reactDom2.default.render(_react2.default.createElement(
     null,
     'Form'
   ),
-  _react2.default.createElement(_Form2.default, {
-    fields: [{ label: '評価', type: 'rating', id: 'rateme' }, { label: 'あいさつ', id: 'freetext' }],
-    initialData: { rateme: 4, freetext: 'Hello' } }),
+  _react2.default.createElement(_Form2.default, null),
   _react2.default.createElement(
     'h2',
     null,
     '\u8AAD\u307F\u53D6\u308A\u5C02\u7528\u306EForm'
   ),
   _react2.default.createElement(_Form2.default, {
-    fields: [{ label: '評価', type: 'rating', id: 'rateme' }, { label: 'あいさつ', id: 'freetext' }],
     initialData: { rateme: 4, freetext: 'Hello' },
     readonly: true }),
   _react2.default.createElement(
