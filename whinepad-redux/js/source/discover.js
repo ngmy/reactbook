@@ -1,5 +1,6 @@
 'use strict';
 
+import DropdownMenu from './components/DropdownMenu';
 import Dialog from './components/Dialog';
 import Actions from './components/Actions';
 import Form from './redux/containers/Form';
@@ -45,6 +46,74 @@ ReactDOM.render(
       <div>初期値4: <Rating defaultValue={4} /></div>
       <div>最大値11: <Rating max={11} /></div>
       <div>読み取り専用: <Rating readonly={true} defaultValue={3} /></div>
+
+      <h2>DropdownMenu</h2>
+      <div>初期値なし：
+        <DropdownMenu
+          options={[
+            {id: '1', name: 'eenie'},
+            {id: '2', name: 'meenie'},
+            {id: '3', name: 'miney'},
+            {id: '4', name: 'mo'},
+          ]} />
+      </div>
+      <div>初期値4：
+        <DropdownMenu
+          selected="4"
+          options={[
+            {id: '1', name: 'eenie'},
+            {id: '2', name: 'meenie'},
+            {id: '3', name: 'miney'},
+            {id: '4', name: 'mo'},
+          ]} />
+      </div>
+      <div>プレースホルダーあり：
+        <DropdownMenu
+          placeholder="選択してください"
+          options={[
+            {id: '1', name: 'eenie'},
+            {id: '2', name: 'meenie'},
+            {id: '3', name: 'miney'},
+            {id: '4', name: 'mo'},
+          ]} />
+      </div>
+      <div>グループ化：
+        <DropdownMenu
+          selected="3_4"
+          groupBy="subcategories"
+          options={[
+            {
+              id: '1',
+              name: 'group1',
+              subcategories: [
+                {id: '1_1', name: 'eenie1'},
+                {id: '1_2', name: 'meenie1'},
+                {id: '1_3', name: 'miney1'},
+                {id: '1_4', name: 'mo1'},
+              ],
+            },
+            {
+              id: '2',
+              name: 'group2',
+              subcategories: [
+                {id: '2_1', name: 'eenie2'},
+                {id: '2_2', name: 'meenie2'},
+                {id: '2_3', name: 'miney2'},
+                {id: '2_4', name: 'mo2'},
+              ],
+            },
+            {
+              id: '3',
+              name: 'group3',
+              subcategories: [
+                {id: '3_1', name: 'eenie3'},
+                {id: '3_2', name: 'meenie3'},
+                {id: '3_3', name: 'miney3'},
+                {id: '3_4', name: 'mo3'},
+              ],
+            },
+          ]} />
+      </div>
 
       <h2>FormInput</h2>
       <table><tbody>

@@ -1,5 +1,9 @@
 'use strict';
 
+var _DropdownMenu = require('./components/DropdownMenu');
+
+var _DropdownMenu2 = _interopRequireDefault(_DropdownMenu);
+
 var _Dialog = require('./components/Dialog');
 
 var _Dialog2 = _interopRequireDefault(_Dialog);
@@ -152,6 +156,55 @@ _reactDom2.default.render(_react2.default.createElement(
       null,
       '\u8AAD\u307F\u53D6\u308A\u5C02\u7528: ',
       _react2.default.createElement(_Rating2.default, { readonly: true, defaultValue: 3 })
+    ),
+    _react2.default.createElement(
+      'h2',
+      null,
+      'DropdownMenu'
+    ),
+    _react2.default.createElement(
+      'div',
+      null,
+      '\u521D\u671F\u5024\u306A\u3057\uFF1A',
+      _react2.default.createElement(_DropdownMenu2.default, {
+        options: [{ id: '1', name: 'eenie' }, { id: '2', name: 'meenie' }, { id: '3', name: 'miney' }, { id: '4', name: 'mo' }] })
+    ),
+    _react2.default.createElement(
+      'div',
+      null,
+      '\u521D\u671F\u50244\uFF1A',
+      _react2.default.createElement(_DropdownMenu2.default, {
+        selected: '4',
+        options: [{ id: '1', name: 'eenie' }, { id: '2', name: 'meenie' }, { id: '3', name: 'miney' }, { id: '4', name: 'mo' }] })
+    ),
+    _react2.default.createElement(
+      'div',
+      null,
+      '\u30D7\u30EC\u30FC\u30B9\u30DB\u30EB\u30C0\u30FC\u3042\u308A\uFF1A',
+      _react2.default.createElement(_DropdownMenu2.default, {
+        placeholder: '\u9078\u629E\u3057\u3066\u304F\u3060\u3055\u3044',
+        options: [{ id: '1', name: 'eenie' }, { id: '2', name: 'meenie' }, { id: '3', name: 'miney' }, { id: '4', name: 'mo' }] })
+    ),
+    _react2.default.createElement(
+      'div',
+      null,
+      '\u30B0\u30EB\u30FC\u30D7\u5316\uFF1A',
+      _react2.default.createElement(_DropdownMenu2.default, {
+        selected: '3_4',
+        groupBy: 'subcategories',
+        options: [{
+          id: '1',
+          name: 'group1',
+          subcategories: [{ id: '1_1', name: 'eenie1' }, { id: '1_2', name: 'meenie1' }, { id: '1_3', name: 'miney1' }, { id: '1_4', name: 'mo1' }]
+        }, {
+          id: '2',
+          name: 'group2',
+          subcategories: [{ id: '2_1', name: 'eenie2' }, { id: '2_2', name: 'meenie2' }, { id: '2_3', name: 'miney2' }, { id: '2_4', name: 'mo2' }]
+        }, {
+          id: '3',
+          name: 'group3',
+          subcategories: [{ id: '3_1', name: 'eenie3' }, { id: '3_2', name: 'meenie3' }, { id: '3_3', name: 'miney3' }, { id: '3_4', name: 'mo3' }]
+        }] })
     ),
     _react2.default.createElement(
       'h2',
